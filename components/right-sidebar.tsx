@@ -11,7 +11,7 @@ export function RightSidebar({ onStartChat }: RightSidebarProps) {
   return (
     <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 h-full shadow-2xl">
       {/* Enhanced Update Button */}
-      <Button className="w-full mb-6 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 hover:from-purple-500/30 hover:to-cyan-500/30 text-white border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 rounded-xl backdrop-blur-sm">
+      <Button className="w-full mb-6 bg-gradient-to-r from-teal-500/20 to-cyan-500/20 hover:from-teal-500/30 hover:to-cyan-500/30 text-white border border-teal-500/30 hover:border-teal-400/50 transition-all duration-300 rounded-xl backdrop-blur-sm">
         <Zap className="w-4 h-4 mr-2" />
         Update my roadmap
       </Button>
@@ -26,7 +26,7 @@ export function RightSidebar({ onStartChat }: RightSidebarProps) {
           <div className="space-y-4">
             <div>
               <div className="flex items-center space-x-3 mb-3">
-                <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
+                <div className="w-6 h-6 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center">
                   <Brain className="w-3 h-3 text-white" />
                 </div>
                 <h4 className="font-medium text-cyan-300">Why It Matters</h4>
@@ -42,7 +42,7 @@ export function RightSidebar({ onStartChat }: RightSidebarProps) {
             <div className="border-t border-white/10 pt-4">
               <div className="flex items-center justify-between">
                 <span className="font-medium text-white flex items-center">
-                  <Sparkles className="w-4 h-4 mr-2 text-purple-400" />
+                  <Sparkles className="w-4 h-4 mr-2 text-teal-400" />
                   Apply?
                 </span>
                 <div className="flex items-center space-x-3">
@@ -70,7 +70,7 @@ export function RightSidebar({ onStartChat }: RightSidebarProps) {
         <div className="border-t border-white/10 pt-6">
           <Button
             onClick={onStartChat}
-            className="w-full bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl group"
+            className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl group"
           >
             <MessageSquare className="w-4 h-4 mr-2 group-hover:animate-pulse" />
             Start a new session

@@ -963,12 +963,13 @@ export default function YCPrototype() {
       {/* Top Bar */}
       <div className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="w-8 h-8 bg-gradient-to-r from-teal-600 to-blue-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">SE</span>
-          </div>
+                  <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center">
+          <span className="text-white font-bold text-sm">SE</span>
+        </div>
           <span className="text-lg font-semibold text-gray-900">Summon Experts</span>
         </div>
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <Button variant="outline" size="sm" onClick={() => setIsAIModalOpen(true)}>
             <Rocket className="w-4 h-4 mr-2" />
             Deploy

@@ -76,7 +76,7 @@ export function RoadmapView() {
       <div className="p-6 border-b border-white/10 bg-gradient-to-r from-white/5 to-transparent">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg">
+            <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg">
               <BarChart3 className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -86,7 +86,7 @@ export function RoadmapView() {
               <p className="text-gray-400 text-sm">AI-powered strategic planning</p>
             </div>
           </div>
-          <Button className="bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl">
+          <Button className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl">
             <Plus className="w-4 h-4 mr-2" />
             New Project
           </Button>

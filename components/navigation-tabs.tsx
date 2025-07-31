@@ -14,13 +14,13 @@ export function NavigationTabs() {
             className="text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-300 rounded-xl"
           >
             <Home className="w-4 h-4 mr-2" />
-            Daniela Adriana's Workspace
+            Summon Experts Workspace
           </Button>
           <ChevronRight className="w-4 h-4 text-gray-500" />
           <Button
             variant="ghost"
             size="sm"
-            className="text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10 transition-all duration-300 rounded-xl bg-cyan-500/5 border border-cyan-500/20"
+            className="text-teal-400 hover:text-teal-300 hover:bg-teal-500/10 transition-all duration-300 rounded-xl bg-teal-500/5 border border-teal-500/20"
           >
             <FileText className="w-4 h-4 mr-2" />
             Business Roadmap

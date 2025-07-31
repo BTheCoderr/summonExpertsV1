@@ -179,7 +179,7 @@ export default function LandingPage() {
             
             <div className="contact-info">
               <p>
-                Questions? <span className="text-link" onClick={handleTextClick}>Contact us</span> or call <a href="tel:+1234567890" className="text-link">+1 (234) 567-890</a>
+                Questions? <span className="text-link" onClick={handleTextClick}>Contact us</span> or call <a href="tel:+18574078886" className="text-link">+1 (857) 407-8886</a>
               </p>
             </div>
           </div>
@@ -395,8 +395,8 @@ export default function LandingPage() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                <div className="founder-avatar">BD</div>
-                <h3>Baheem Daniel</h3>
+                <div className="founder-avatar">BF</div>
+                <h3>Baheem Ferrell</h3>
                 <p>Technical Founder & AI Engineer</p>
               </motion.div>
               
@@ -407,8 +407,8 @@ export default function LandingPage() {
                 transition={{ duration: 0.8, delay: 0.4 }}
                 viewport={{ once: true }}
               >
-                <div className="founder-avatar">DF</div>
-                <h3>Daniela Ferrell</h3>
+                <div className="founder-avatar">DA</div>
+                <h3>Damola Adediran</h3>
                 <p>Business Strategy & Operations</p>
               </motion.div>
             </div>
@@ -468,13 +468,13 @@ export default function LandingPage() {
                 <div className="contact-method">
                   <Phone size={20} />
                   <span>
-                    <a href="tel:+1234567890">+1 (234) 567-890</a>
+                    <a href="tel:+18574078886">+1 (857) 407-8886</a>
                   </span>
                 </div>
                 <div className="contact-method">
                   <Mail size={20} />
                   <span>
-                    <a href="mailto:hello@summonexperts.com">hello@summonexperts.com</a>
+                    <a href="mailto:info@summonexperts.com">info@summonexperts.com</a>
                   </span>
                 </div>
                 <div className="contact-method">
@@ -510,13 +510,13 @@ export default function LandingPage() {
             </div>
             
             <div className="contact-links">
-              <a href="tel:+1234567890" className="contact-link">
+              <a href="tel:+18574078886" className="contact-link">
                 <Phone size={16} />
-                <span>+1 (234) 567-890</span>
+                <span>+1 (857) 407-8886</span>
               </a>
-              <a href="mailto:hello@summonexperts.com" className="contact-link">
+              <a href="mailto:info@summonexperts.com" className="contact-link">
                 <Mail size={16} />
-                <span>hello@summonexperts.com</span>
+                <span>info@summonexperts.com</span>
               </a>
             </div>
             
