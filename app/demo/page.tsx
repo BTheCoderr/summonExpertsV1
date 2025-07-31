@@ -894,52 +894,133 @@ export default function YCPrototype() {
     </div>
   )
 
-  const renderProgressAudit = () => (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <BarChart3 className="w-6 h-6 text-blue-600" />
-        <h1 className="text-3xl font-bold text-gray-900">Progress Audit Logs</h1>
+  const renderProgressAudit = () => {
+    // Mock audit data with realistic dates from July 2025 and earlier
+    const mockAudits = [
+      {
+        id: 1,
+        date: '2025-07-28',
+        title: 'Weekly Progress Review',
+        tasksCompleted: 8,
+        totalTasks: 12,
+        completionRate: 67,
+        notes: 'Made significant progress on business registration and kitchen setup. Need to focus on marketing strategy next week.',
+        status: 'completed'
+      },
+      {
+        id: 2,
+        date: '2025-07-21',
+        title: 'Mid-Month Assessment',
+        tasksCompleted: 5,
+        totalTasks: 10,
+        completionRate: 50,
+        notes: 'Completed market research and finalized business plan. Behind schedule on supplier contacts.',
+        status: 'completed'
+      },
+      {
+        id: 3,
+        date: '2025-07-14',
+        title: 'Week 2 Progress Check',
+        tasksCompleted: 6,
+        totalTasks: 8,
+        completionRate: 75,
+        notes: 'Excellent progress on recipe development and cost analysis. Ready to start vendor outreach.',
+        status: 'completed'
+      },
+      {
+        id: 4,
+        date: '2025-07-07',
+        title: 'Launch Week Review',
+        tasksCompleted: 3,
+        totalTasks: 6,
+        completionRate: 50,
+        notes: 'Started strong with business idea validation. Need to accelerate planning phase.',
+        status: 'completed'
+      }
+    ]
+
+    const totalAudits = mockAudits.length
+    const averageCompletion = Math.round(mockAudits.reduce((sum, audit) => sum + audit.completionRate, 0) / totalAudits)
+    const totalTasksCompleted = mockAudits.reduce((sum, audit) => sum + audit.tasksCompleted, 0)
+    const totalTasks = mockAudits.reduce((sum, audit) => sum + audit.totalTasks, 0)
+
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center gap-3">
+          <BarChart3 className="w-6 h-6 text-blue-600" />
+          <h1 className="text-3xl font-bold text-gray-900">Progress Audit Logs</h1>
+        </div>
+        
+        <p className="text-gray-600 text-lg">Review your progress and reflections to track momentum.</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Audit Summary</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2 text-gray-600">
+                <li>• Total Audits: {totalAudits}</li>
+                <li>• Average Completion Rate: {averageCompletion}%</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Task Completion</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2 text-gray-600">
+                <li>• Tasks Completed: {totalTasksCompleted} of {totalTasks}</li>
+                <li>• Overall Completion Rate: {Math.round((totalTasksCompleted / totalTasks) * 100)}%</li>
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-gray-900">Recent Audit Records</h2>
+          {mockAudits.map((audit) => (
+            <Card key={audit.id} className="hover:shadow-md transition-shadow">
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-lg font-semibold text-gray-900">{audit.title}</h3>
+                      <Badge variant={audit.status === 'completed' ? 'default' : 'secondary'}>
+                        {audit.status}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-gray-500 mb-3">{new Date(audit.date).toLocaleDateString('en-US', { 
+                      weekday: 'long', 
+                      year: 'numeric', 
+                      month: 'long', 
+                      day: 'numeric' 
+                    })}</p>
+                    <div className="flex items-center gap-4 mb-3">
+                      <span className="text-sm text-gray-600">
+                        Tasks: {audit.tasksCompleted}/{audit.totalTasks}
+                      </span>
+                      <span className="text-sm text-gray-600">
+                        Completion: {audit.completionRate}%
+                      </span>
+                    </div>
+                    <p className="text-gray-700">{audit.notes}</p>
+                  </div>
+                  <div className="ml-4">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-green-500 flex items-center justify-center">
+                      <span className="text-white font-bold text-sm">{audit.completionRate}%</span>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
-      
-      <p className="text-gray-600 text-lg">Review your progress and reflections to track momentum.</p>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Audit Summary</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2 text-gray-600">
-              <li>• Total Audits: 0</li>
-              <li>• Average Tasks Completed: 0</li>
-            </ul>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Task Completion</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2 text-gray-600">
-              <li>• Tasks Completed: 0 of 0</li>
-              <li>• Completion Rate: 0%</li>
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Card>
-        <CardContent className="p-6">
-          <div className="text-center text-gray-500">
-            <BarChart3 className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-            <p className="text-lg">No audit records yet.</p>
-            <p className="text-sm mt-1">Start tracking your progress to see insights here.</p>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  )
+    )
+  }
 
   const renderContent = () => {
     switch (activeTab) {
