@@ -541,145 +541,152 @@ export default function YCPrototype() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Bakery Business Plan</h1>
-          <p className="text-gray-600 mt-2">AI-Powered Strategic Planning & Execution</p>
+        <div className="flex items-center space-x-3">
+          <BookOpen className="w-8 h-8 text-blue-600" />
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Business Overview</h1>
+            <p className="text-gray-600 mt-1">A snapshot of your business and all its key details.</p>
+          </div>
         </div>
         <div className="flex items-center space-x-3">
-          <ThemeToggle />
           <Button variant="outline" size="sm">
-            <Settings className="w-4 h-4 mr-2" />
-            Settings
+            <Edit3 className="w-4 h-4 mr-2" />
+            Edit Project
           </Button>
+          <ThemeToggle />
         </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={generateStrategicPlan}>
-          <CardContent className="p-6">
-            <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <Target className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Generate Strategic Plan</h3>
-                <p className="text-sm text-gray-600">AI-powered business strategy</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
 
-        <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={generateRoadmap}>
-          <CardContent className="p-6">
-            <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-600 rounded-lg flex items-center justify-center">
-                <Map className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Create Roadmap</h3>
-                <p className="text-sm text-gray-600">Timeline and milestones</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
 
-        <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={generateTasks}>
-          <CardContent className="p-6">
-            <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg flex items-center justify-center">
-                <CheckCircle className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Generate Tasks</h3>
-                <p className="text-sm text-gray-600">Weekly action items</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Business Highlights */}
+      <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <h2 className="text-xl font-bold text-gray-900 mb-4">Highlights</h2>
+        <div className="space-y-3">
+          <div className="flex justify-between items-start">
+            <span className="font-semibold text-gray-900">Business Idea:</span>
+            <span className="text-gray-700 text-right max-w-md">I want to start a bakery specializing in fresh, locally sourced bread and pastries.</span>
+          </div>
+          <div className="flex justify-between items-start">
+            <span className="font-semibold text-gray-900">Operating Location:</span>
+            <span className="text-gray-700">Providence, RI</span>
+          </div>
+          <div className="flex justify-between items-start">
+            <span className="font-semibold text-gray-900">Vision:</span>
+            <span className="text-gray-700 text-right max-w-md">To create a cozy neighborhood bakery that delivers affordable, fresh baked goods daily and becomes a staple in the Providence community.</span>
+          </div>
+          <div className="flex justify-between items-start">
+            <span className="font-semibold text-gray-900">Current Stage:</span>
+            <span className="text-gray-700">All I have for now is an idea.</span>
+          </div>
+          <div className="flex justify-between items-start">
+            <span className="font-semibold text-gray-900">Immediate Business Goal:</span>
+            <span className="text-gray-700">Launch and start selling within 2 months</span>
+          </div>
+          <div className="flex justify-between items-start">
+            <span className="font-semibold text-gray-900">End Date:</span>
+            <span className="text-gray-700">2025-09-13</span>
+          </div>
+          <div className="flex justify-between items-start">
+            <span className="font-semibold text-gray-900">Execution Approach:</span>
+            <span className="text-gray-700">Pilot Program</span>
+          </div>
+          <div className="flex justify-between items-start">
+            <span className="font-semibold text-gray-900">Review Cadence:</span>
+            <span className="text-gray-700">Monthly</span>
+          </div>
+          <div className="flex justify-between items-start">
+            <span className="font-semibold text-gray-900">Available Time per Week:</span>
+            <span className="text-gray-700">15 hours</span>
+          </div>
+          <div className="flex justify-between items-start">
+            <span className="font-semibold text-gray-900">Relevant Experience:</span>
+            <span className="text-gray-700">Experienced baker, new to business operations</span>
+          </div>
+          <div className="flex justify-between items-start">
+            <span className="font-semibold text-gray-900">Other Comments:</span>
+            <span className="text-gray-700 text-right max-w-md">I want something small I can scale gradually. I'm considering starting by selling at farmers' markets or online.</span>
+          </div>
+        </div>
       </div>
 
       {/* Strategic Hurdles */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <AlertTriangle className="w-5 h-5 text-orange-500" />
-            <span>Strategic Hurdles</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {strategicHurdles.map((hurdle) => (
-              <div key={hurdle.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <div className="flex-1">
-                  <h4 className="font-medium text-gray-900">{hurdle.title}</h4>
-                  <p className="text-sm text-gray-600 mt-1">{hurdle.description}</p>
-                  <div className="flex items-center space-x-4 mt-2">
-                    <Badge variant={hurdle.priority === 'Critical' ? 'destructive' : 'secondary'}>
-                      {hurdle.priority}
-                    </Badge>
-                    <Badge variant="outline">{hurdle.status}</Badge>
-                  </div>
+      <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <h2 className="text-xl font-bold text-gray-900 mb-4">Strategic Hurdles</h2>
+        <div className="space-y-4">
+          <div className="flex items-start justify-between p-4 bg-gray-50 rounded-lg">
+            <div className="flex-1">
+              <h4 className="font-semibold text-gray-900">Need to decide whether to rent a commercial kitchen or bake from home.</h4>
+              <div className="flex items-center space-x-4 mt-2">
+                <div className="flex items-center space-x-1 text-sm text-gray-600">
+                  <Calendar className="w-4 h-4" />
+                  <span>2025-07-21</span>
                 </div>
-                <Button variant="outline" size="sm">
-                  <Edit3 className="w-4 h-4" />
-                </Button>
+                <div className="flex items-center space-x-1 text-sm text-orange-600 font-medium">
+                  <Zap className="w-4 h-4" />
+                  <span>High</span>
+                </div>
               </div>
-            ))}
+            </div>
           </div>
-        </CardContent>
-      </Card>
+          
+          <div className="flex items-start justify-between p-4 bg-gray-50 rounded-lg">
+            <div className="flex-1">
+              <h4 className="font-semibold text-gray-900">Must register the business and secure local food permits.</h4>
+              <div className="flex items-center space-x-4 mt-2">
+                <div className="flex items-center space-x-1 text-sm text-gray-600">
+                  <Calendar className="w-4 h-4" />
+                  <span>2025-07-27</span>
+                </div>
+                <div className="flex items-center space-x-1 text-sm text-orange-600 font-medium">
+                  <Zap className="w-4 h-4" />
+                  <span>High</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex items-start justify-between p-4 bg-gray-50 rounded-lg">
+            <div className="flex-1">
+              <h4 className="font-semibold text-gray-900">No website or storefront - need a way to accept orders.</h4>
+              <div className="flex items-center space-x-4 mt-2">
+                <div className="flex items-center space-x-1 text-sm text-gray-600">
+                  <Calendar className="w-4 h-4" />
+                  <span>2025-08-01</span>
+                </div>
+                <div className="flex items-center space-x-1 text-sm text-blue-600 font-medium">
+                  <Zap className="w-4 h-4" />
+                  <span>Medium</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex items-start justify-between p-4 bg-gray-50 rounded-lg">
+            <div className="flex-1">
+              <h4 className="font-semibold text-gray-900">Limited startup budget</h4>
+              <div className="flex items-center space-x-4 mt-2">
+                <div className="flex items-center space-x-1 text-sm text-gray-600">
+                  <Calendar className="w-4 h-4" />
+                  <span>2025-07-25</span>
+                </div>
+                <div className="flex items-center space-x-1 text-sm text-orange-600 font-medium">
+                  <Zap className="w-4 h-4" />
+                  <span>High</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Uploaded Files */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Upload className="w-5 h-5 text-blue-500" />
-            <span>Uploaded Files</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-              <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-              <p className="text-gray-600 mb-2">Upload business documents, plans, or research</p>
-              <input
-                type="file"
-                multiple
-                onChange={handleFileUpload}
-                className="hidden"
-                id="file-upload"
-              />
-              <label htmlFor="file-upload" className="cursor-pointer">
-                <Button variant="outline" size="sm">
-                  Choose Files
-                </Button>
-              </label>
-            </div>
-            
-            {uploadedFiles.length > 0 && (
-              <div className="space-y-2">
-                {uploadedFiles.map((file, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      <FileText className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm text-gray-700">{file}</span>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => removeFile(file)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      <X className="w-4 h-4" />
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
+      <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <h2 className="text-xl font-bold text-gray-900 mb-4">Uploaded Files</h2>
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
+          <p className="text-blue-700">No files uploaded.</p>
+        </div>
+      </div>
     </div>
   )
 
@@ -960,12 +967,12 @@ export default function YCPrototype() {
       
       {/* Main content with backdrop blur */}
       <div className="relative z-10">
-      {/* Top Bar */}
-      <div className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
+            {/* Top Bar */}
+      <div className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-4">
-                  <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center">
-          <span className="text-white font-bold text-sm">SE</span>
-        </div>
+          <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center">
+            <span className="text-white font-bold text-sm">SE</span>
+          </div>
           <span className="text-lg font-semibold text-gray-900">Summon Experts</span>
         </div>
         <div className="flex items-center gap-2">
@@ -1023,7 +1030,7 @@ export default function YCPrototype() {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-6 py-8">
+      <div className="container mx-auto px-6 py-8 bg-white/95 backdrop-blur-sm rounded-t-3xl shadow-lg">
         {renderContent()}
       </div>
 
