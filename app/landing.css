@@ -1,21 +1,21 @@
 /* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap');
 
-/* CSS Variables - Updated to match platform theme */
+/* CSS Variables - Updated to match Summon Experts logo */
 :root {
-  --primary-color: #0f172a; /* slate-900 */
-  --secondary-color: #1e293b; /* slate-800 */
-  --accent-color: #8b5cf6; /* purple-500 */
-  --accent-hover: #7c3aed; /* purple-600 */
-  --accent-light: #a855f7; /* purple-400 */
-  --text-primary: #ffffff;
-  --text-secondary: #e2e8f0;
-  --text-muted: #94a3b8;
-  --bg-primary: #0f172a; /* slate-900 */
-  --bg-secondary: #1e293b; /* slate-800 */
-  --bg-light: #334155; /* slate-700 */
-  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%); /* slate-900 to purple-900 */
-  --border-color: #475569; /* slate-600 */
+  --primary-color: #0f172a; /* dark blue/black like logo background */
+  --secondary-color: #1e293b; /* slightly lighter dark blue */
+  --accent-color: #00d4aa; /* teal-green like logo pieces */
+  --accent-hover: #00b894; /* darker teal-green */
+  --accent-light: #00f5d4; /* lighter teal-green like logo text */
+  --text-primary: #ffffff; /* white text for contrast */
+  --text-secondary: #e2e8f0; /* light gray */
+  --text-muted: #94a3b8; /* muted gray */
+  --bg-primary: #0f172a; /* dark blue/black like logo background */
+  --bg-secondary: #1e293b; /* slightly lighter dark blue */
+  --bg-light: #334155; /* medium dark blue */
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); /* dark blue gradient */
+  --border-color: #475569; /* slate border */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -61,7 +61,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(15, 23, 42, 0.95); /* slate-900 with transparency */
+  background: rgba(15, 23, 42, 0.95); /* dark blue with transparency */
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-color);
   z-index: 1000;
@@ -115,7 +115,7 @@ body {
 .nav-link:hover,
 .nav-link.active {
   color: var(--accent-color);
-  background: rgba(139, 92, 246, 0.1);
+  background: rgba(0, 212, 170, 0.1);
 }
 
 .nav-link.cta-nav {
@@ -171,7 +171,7 @@ body {
 }
 
 .mobile-nav-link:hover {
-  background: rgba(139, 92, 246, 0.1);
+  background: rgba(0, 212, 170, 0.1);
   color: var(--accent-color);
 }
 
@@ -919,7 +919,7 @@ body {
 .contact-form textarea:focus {
   outline: none;
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
 }
 
 .contact-form textarea {
