@@ -17,7 +17,10 @@ import {
   ExternalLink,
   Menu,
   X,
-  MessageCircle
+  MessageCircle,
+  Rocket,
+  Zap,
+  Target
 } from 'lucide-react';
 
 export default function LandingPage() {
@@ -153,11 +156,20 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
               <button className="cta-button primary" onClick={handleCTAClick}>
                 Get Early Access
                 <ArrowRight size={20} />
               </button>
+              <Link href="/demo" className="cta-button">
+                <Rocket size={20} />
+                Try Demo
+              </Link>
+              <Link href="/dashboard" className="cta-button">
+                <Zap size={20} />
+                Full Platform
+              </Link>
             </motion.div>
             
             <div className="contact-info">
@@ -464,6 +476,18 @@ export default function LandingPage() {
                   <MessageCircle size={20} />
                   <span>
                     <Link href="/demo" className="text-link">Try Demo Now</Link>
+                  </span>
+                </div>
+                <div className="contact-method">
+                  <Target size={20} />
+                  <span>
+                    <Link href="/dashboard" className="text-link">Full Platform Access</Link>
+                  </span>
+                </div>
+                <div className="contact-method">
+                  <ExternalLink size={20} />
+                  <span>
+                    <Link href="/test-notion" className="text-link">Test Notion Integration</Link>
                   </span>
                 </div>
               </div>
