@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { ThemeToggle } from '@/components/theme-toggle';
 import { 
   Brain, 
   Wrench, 
@@ -102,6 +103,7 @@ export default function LandingPage() {
             <Link href="/demo" className="nav-link cta-nav">
               Try Demo
             </Link>
+            <ThemeToggle />
           </div>
           
           <button 
@@ -126,6 +128,9 @@ export default function LandingPage() {
             <Link href="/demo" className="mobile-nav-link cta-nav">
               Try Demo
             </Link>
+            <div className="mobile-nav-link">
+              <ThemeToggle />
+            </div>
           </div>
         )}
       </nav>

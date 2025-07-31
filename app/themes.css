@@ -1,0 +1,129 @@
+/* Theme System - Dark and Light Themes */
+
+/* Dark Theme (Default) */
+:root[data-theme="dark"] {
+  /* Summon Experts Brand Colors - Dark Theme */
+  --primary-color: #0f172a; /* dark blue/black like logo background */
+  --secondary-color: #1e293b; /* slightly lighter dark blue */
+  --accent-color: #00d4aa; /* teal-green like logo pieces */
+  --accent-hover: #00b894; /* darker teal-green */
+  --accent-light: #00f5d4; /* lighter teal-green like logo text */
+  
+  /* Text Colors */
+  --text-primary: #ffffff; /* white text for contrast */
+  --text-secondary: #e2e8f0; /* light gray */
+  --text-muted: #94a3b8; /* muted gray */
+  
+  /* Background Colors */
+  --bg-primary: #0f172a; /* dark blue/black like logo background */
+  --bg-secondary: #1e293b; /* slightly lighter dark blue */
+  --bg-light: #334155; /* medium dark blue */
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  
+  /* Border and Shadow Colors */
+  --border-color: #475569; /* slate border */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Card and Component Colors */
+  --card-bg: #1e293b;
+  --card-border: #475569;
+  --input-bg: #0f172a;
+  --input-border: #475569;
+  --input-focus: #00d4aa;
+  
+  /* Status Colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+}
+
+/* Light Theme */
+:root[data-theme="light"] {
+  /* Summon Experts Brand Colors - Light Theme */
+  --primary-color: #ffffff; /* white background */
+  --secondary-color: #f8fafc; /* very light gray */
+  --accent-color: #00d4aa; /* teal-green like logo pieces */
+  --accent-hover: #00b894; /* darker teal-green */
+  --accent-light: #00f5d4; /* lighter teal-green like logo text */
+  
+  /* Text Colors */
+  --text-primary: #0f172a; /* dark blue text for contrast */
+  --text-secondary: #475569; /* medium gray */
+  --text-muted: #64748b; /* muted gray */
+  
+  /* Background Colors */
+  --bg-primary: #ffffff; /* white background */
+  --bg-secondary: #f8fafc; /* very light gray */
+  --bg-light: #f1f5f9; /* light gray */
+  --bg-gradient: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%);
+  
+  /* Border and Shadow Colors */
+  --border-color: #e2e8f0; /* light gray border */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Card and Component Colors */
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --input-bg: #ffffff;
+  --input-border: #d1d5db;
+  --input-focus: #00d4aa;
+  
+  /* Status Colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+}
+
+/* Common Variables */
+:root {
+  --border-radius: 12px;
+  --border-radius-lg: 16px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Theme Toggle Button Styles */
+.theme-toggle-btn {
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-secondary) !important;
+  transition: var(--transition) !important;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--accent-color) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--accent-color) !important;
+}
+
+/* Platform-specific theme overrides */
+.platform-theme {
+  /* Override landing page styles for platform pages */
+  --bg-primary: var(--bg-primary);
+  --bg-secondary: var(--bg-secondary);
+  --text-primary: var(--text-primary);
+  --text-secondary: var(--text-secondary);
+  --accent-color: var(--accent-color);
+  --accent-hover: var(--accent-hover);
+}
+
+/* Smooth theme transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Ensure proper contrast in both themes */
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+} 

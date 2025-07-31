@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { ThemeToggle } from '@/components/theme-toggle'
 import { 
   BookOpen, 
   Map, 
@@ -99,442 +100,309 @@ function AIModal({ isOpen, onClose, title, messages, onComplete, type }: AIModal
         })
       }, 800)
     }
-  }, [currentMessageIndex, messages.length, isOpen])
-
-  // Reset state when modal opens
-  React.useEffect(() => {
-    if (isOpen) {
-      setCurrentMessageIndex(0)
-      setIsComplete(false)
-      setShowResults(false)
-      setAiMetrics({
-        accuracy: 70,
-        confidence: 65,
-        processingPower: 40,
-        dataPoints: 500
-      })
-    }
-  }, [isOpen])
+  }, [isOpen, currentMessageIndex, messages.length])
 
   const handleComplete = () => {
-    setShowResults(true)
-  }
-
-  const handleClose = () => {
-    setIsComplete(false)
-    setCurrentMessageIndex(0)
-    setShowResults(false)
     onComplete()
     onClose()
   }
 
-  if (!isOpen) return null
-
-  const renderResults = () => {
-    switch (type) {
-      case 'strategic-plan':
-        return (
-          <div className="space-y-4">
-            <div className="bg-gradient-to-r from-blue-50 via-purple-50 to-indigo-50 p-6 rounded-xl border border-blue-200 shadow-lg">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                  <Brain className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-blue-900 text-lg">Strategic Plan Generated</h4>
-                  <p className="text-blue-700 text-sm">AI-Powered Business Strategy</p>
-                </div>
-              </div>
-              <p className="text-blue-800 text-sm leading-relaxed">
-                Your comprehensive business strategy has been created and saved to Notion. 
-                The plan includes advanced market analysis, competitive positioning, and execution roadmap.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-xl border border-green-200 shadow-md">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                    <Globe className="w-5 h-5 text-white" />
-                  </div>
-                  <h5 className="font-semibold text-green-900">Market Analysis</h5>
-                </div>
-                <p className="text-green-700 text-sm mb-2">Providence bakery market researched</p>
-                <div className="flex items-center gap-2 text-xs text-green-600">
-                  <Activity className="w-3 h-3" />
-                  <span>2,500+ data points analyzed</span>
-                </div>
-              </div>
-              
-              <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-4 rounded-xl border border-blue-200 shadow-md">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                    <Target className="w-5 h-5 text-white" />
-                  </div>
-                  <h5 className="font-semibold text-blue-900">Strategic Priorities</h5>
-                </div>
-                <p className="text-blue-700 text-sm mb-2">5 key priorities identified</p>
-                <div className="flex items-center gap-2 text-xs text-blue-600">
-                  <BarChart className="w-3 h-3" />
-                  <span>98% confidence score</span>
-                </div>
-              </div>
-              
-              <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-4 rounded-xl border border-purple-200 shadow-md">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
-                    <Lightbulb className="w-5 h-5 text-white" />
-                  </div>
-                  <h5 className="font-semibold text-purple-900">Execution Framework</h5>
-                </div>
-                <p className="text-purple-700 text-sm mb-2">2-month launch timeline created</p>
-                <div className="flex items-center gap-2 text-xs text-purple-600">
-                  <TrendingUp className="w-3 h-3" />
-                  <span>Optimized for success</span>
-                </div>
-              </div>
-
-              <div className="bg-gradient-to-br from-orange-50 to-red-50 p-4 rounded-xl border border-orange-200 shadow-md">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
-                    <DollarIcon className="w-5 h-5 text-white" />
-                  </div>
-                  <h5 className="font-semibold text-orange-900">Revenue Projections</h5>
-                </div>
-                <p className="text-orange-700 text-sm mb-2">$45K first year estimate</p>
-                <div className="flex items-center gap-2 text-xs text-orange-600">
-                  <TrendingUp className="w-3 h-3" />
-                  <span>Conservative growth model</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-4 rounded-xl border border-gray-200">
-              <div className="flex items-center gap-2 mb-2">
-                <Shield className="w-4 h-4 text-blue-600" />
-                <h5 className="font-semibold text-gray-900">AI Confidence Metrics</h5>
-              </div>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <span className="text-gray-600">Accuracy:</span>
-                  <span className="ml-2 font-semibold text-green-600">{aiMetrics.accuracy}%</span>
-                </div>
-                <div>
-                  <span className="text-gray-600">Confidence:</span>
-                  <span className="ml-2 font-semibold text-blue-600">{aiMetrics.confidence}%</span>
-                </div>
-              </div>
-              <p className="text-sm text-gray-600 mt-3">
-                <strong>Next Steps:</strong> Review the strategic plan in your Notion workspace and begin implementing the roadmap.
-              </p>
-            </div>
-          </div>
-        )
-
-      case 'roadmap':
-        return (
-          <div className="space-y-4">
-            <div className="bg-gradient-to-r from-green-50 via-emerald-50 to-teal-50 p-6 rounded-xl border border-green-200 shadow-lg">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                  <Map className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-green-900 text-lg">Roadmap Created</h4>
-                  <p className="text-green-700 text-sm">AI-Optimized Execution Timeline</p>
-                </div>
-              </div>
-              <p className="text-green-800 text-sm leading-relaxed">
-                Your detailed execution timeline has been generated with 4 major milestones and 12 key results, 
-                optimized for maximum efficiency and success probability.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-xl border border-green-200 shadow-md">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                    <Calendar className="w-5 h-5 text-white" />
-                  </div>
-                  <h5 className="font-semibold text-green-900">4 Milestones Created</h5>
-                </div>
-                <p className="text-green-700 text-sm mb-2">From location setup to online presence</p>
-                <div className="flex items-center gap-2 text-xs text-green-600">
-                  <Clock className="w-3 h-3" />
-                  <span>8-week optimized timeline</span>
-                </div>
-              </div>
-              
-              <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-4 rounded-xl border border-blue-200 shadow-md">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                    <Target className="w-5 h-5 text-white" />
-                  </div>
-                  <h5 className="font-semibold text-blue-900">12 Key Results Defined</h5>
-                </div>
-                <p className="text-blue-700 text-sm mb-2">Specific, measurable outcomes</p>
-                <div className="flex items-center gap-2 text-xs text-blue-600">
-                  <CheckCircle className="w-3 h-3" />
-                  <span>SMART goal framework</span>
-                </div>
-              </div>
-              
-              <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-4 rounded-xl border border-purple-200 shadow-md">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
-                    <TrendingUp className="w-5 h-5 text-white" />
-                  </div>
-                  <h5 className="font-semibold text-purple-900">Progress Tracking</h5>
-                </div>
-                <p className="text-purple-700 text-sm mb-2">Automated progress monitoring setup</p>
-                <div className="flex items-center gap-2 text-xs text-purple-600">
-                  <Activity className="w-3 h-3" />
-                  <span>Real-time analytics</span>
-                </div>
-              </div>
-
-              <div className="bg-gradient-to-br from-orange-50 to-red-50 p-4 rounded-xl border border-orange-200 shadow-md">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
-                    <Cpu className="w-5 h-5 text-white" />
-                  </div>
-                  <h5 className="font-semibold text-orange-900">AI Optimization</h5>
-                </div>
-                <p className="text-orange-700 text-sm mb-2">Machine learning insights applied</p>
-                <div className="flex items-center gap-2 text-xs text-orange-600">
-                  <Brain className="w-3 h-3" />
-                  <span>Success probability: 87%</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-r from-gray-50 to-green-50 p-4 rounded-xl border border-gray-200">
-              <div className="flex items-center gap-2 mb-2">
-                <Database className="w-4 h-4 text-green-600" />
-                <h5 className="font-semibold text-gray-900">AI Processing Summary</h5>
-              </div>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <span className="text-gray-600">Data Points:</span>
-                  <span className="ml-2 font-semibold text-green-600">{aiMetrics.dataPoints.toLocaleString()}</span>
-                </div>
-                <div>
-                  <span className="text-gray-600">Processing Power:</span>
-                  <span className="ml-2 font-semibold text-blue-600">{aiMetrics.processingPower}%</span>
-                </div>
-              </div>
-              <p className="text-sm text-gray-600 mt-3">
-                <strong>Next Steps:</strong> Your roadmap is now live in Notion. Start with the first milestone and track progress weekly.
-              </p>
-            </div>
-          </div>
-        )
-
-      case 'tasks':
-        return (
-          <div className="space-y-4">
-            <div className="bg-gradient-to-r from-orange-50 via-red-50 to-pink-50 p-6 rounded-xl border border-orange-200 shadow-lg">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg flex items-center justify-center">
-                  <Calendar className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-orange-900 text-lg">Weekly Tasks Generated</h4>
-                  <p className="text-orange-700 text-sm">AI-Powered Task Optimization</p>
-                </div>
-              </div>
-              <p className="text-orange-800 text-sm leading-relaxed">
-                Your personalized task plan has been created with 5 prioritized tasks for this week, 
-                optimized for maximum impact within your 15-hour time constraint.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-xl border border-green-200 shadow-md">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                    <CheckCircle className="w-5 h-5 text-white" />
-                  </div>
-                  <h5 className="font-semibold text-green-900">5 Tasks Prioritized</h5>
-                </div>
-                <p className="text-green-700 text-sm mb-2">Based on urgency and impact</p>
-                <div className="flex items-center gap-2 text-xs text-green-600">
-                  <Target className="w-3 h-3" />
-                  <span>Impact score: 9.2/10</span>
-                </div>
-              </div>
-              
-              <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-4 rounded-xl border border-blue-200 shadow-md">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                    <Clock className="w-5 h-5 text-white" />
-                  </div>
-                  <h5 className="font-semibold text-blue-900">15 Hours Allocated</h5>
-                </div>
-                <p className="text-blue-700 text-sm mb-2">Perfect fit for your available time</p>
-                <div className="flex items-center gap-2 text-xs text-blue-600">
-                  <Activity className="w-3 h-3" />
-                  <span>Efficiency: 94%</span>
-                </div>
-              </div>
-              
-              <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-4 rounded-xl border border-purple-200 shadow-md">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
-                    <Zap className="w-5 h-5 text-white" />
-                  </div>
-                  <h5 className="font-semibold text-purple-900">Execution Instructions</h5>
-                </div>
-                <p className="text-purple-700 text-sm mb-2">Step-by-step guidance for each task</p>
-                <div className="flex items-center gap-2 text-xs text-purple-600">
-                  <UserCheck className="w-3 h-3" />
-                  <span>Beginner-friendly</span>
-                </div>
-              </div>
-
-              <div className="bg-gradient-to-br from-indigo-50 to-blue-50 p-4 rounded-xl border border-indigo-200 shadow-md">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center">
-                    <LightningIcon className="w-5 h-5 text-white" />
-                  </div>
-                  <h5 className="font-semibold text-indigo-900">Smart Automation</h5>
-                </div>
-                <p className="text-indigo-700 text-sm mb-2">AI-powered task scheduling</p>
-                <div className="flex items-center gap-2 text-xs text-indigo-600">
-                  <Cpu className="w-3 h-3" />
-                  <span>Auto-optimized sequence</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-r from-gray-50 to-orange-50 p-4 rounded-xl border border-gray-200">
-              <div className="flex items-center gap-2 mb-2">
-                <PieChart className="w-4 h-4 text-orange-600" />
-                <h5 className="font-semibold text-gray-900">Task Analytics</h5>
-              </div>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <span className="text-gray-600">Completion Rate:</span>
-                  <span className="ml-2 font-semibold text-green-600">87%</span>
-                </div>
-                <div>
-                  <span className="text-gray-600">Time Efficiency:</span>
-                  <span className="ml-2 font-semibold text-blue-600">94%</span>
-                </div>
-              </div>
-              <p className="text-sm text-gray-600 mt-3">
-                <strong>Next Steps:</strong> Your tasks are ready in Notion. Start with the high-priority items and track completion daily.
-              </p>
-            </div>
-          </div>
-        )
-
-      default:
-        return null
-    }
+  const handleClose = () => {
+    setCurrentMessageIndex(0)
+    setIsComplete(false)
+    setShowResults(false)
+    setAiMetrics({ accuracy: 0, confidence: 0, processingPower: 0, dataPoints: 0 })
+    onClose()
   }
 
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl p-6 max-w-2xl w-full mx-4 max-h-[85vh] overflow-y-auto shadow-2xl border border-gray-100">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-            <Bot className="w-6 h-6 text-white" />
+  const renderResults = () => {
+    const results = {
+      'strategic-plan': {
+        title: 'Strategic Plan Generated',
+        content: `**Bakery Business Strategic Plan**
+
+**Executive Summary:**
+Transform your bakery into a premium, tech-enabled destination with AI-driven operations and sustainable practices.
+
+**Key Strategic Pillars:**
+
+1. **Market Positioning**
+   - Premium artisan bakery with tech integration
+   - Focus on sustainability and local sourcing
+   - Target: Urban professionals, food enthusiasts, health-conscious consumers
+
+2. **Operational Excellence**
+   - AI-powered inventory management
+   - Automated production scheduling
+   - Real-time quality monitoring systems
+
+3. **Revenue Diversification**
+   - Subscription boxes for corporate clients
+   - Online ordering and delivery platform
+   - Catering and event services
+   - Baking classes and workshops
+
+4. **Technology Integration**
+   - Smart ovens with IoT connectivity
+   - Customer loyalty app with personalized recommendations
+   - Data analytics for demand forecasting
+
+**Financial Projections:**
+- Year 1: $500K revenue, 15% margin
+- Year 3: $1.2M revenue, 25% margin
+- Year 5: $2.5M revenue, 30% margin
+
+**Implementation Timeline:**
+- Phase 1 (Months 1-6): Core operations and branding
+- Phase 2 (Months 7-12): Technology integration
+- Phase 3 (Months 13-18): Market expansion
+- Phase 4 (Months 19-24): Scaling and optimization`
+      },
+      'roadmap': {
+        title: 'Business Roadmap Created',
+        content: `**Bakery Business Roadmap**
+
+**Q1 2024 - Foundation Phase**
+- Secure funding and location
+- Develop brand identity and marketing materials
+- Set up legal structure and permits
+- Hire core team (head baker, manager, 2 assistants)
+
+**Q2 2024 - Launch Preparation**
+- Complete facility build-out and equipment installation
+- Develop initial menu and pricing strategy
+- Launch social media presence and website
+- Conduct soft opening and gather feedback
+
+**Q3 2024 - Market Entry**
+- Grand opening with marketing campaign
+- Establish supplier relationships
+- Launch loyalty program
+- Begin catering services
+
+**Q4 2024 - Growth Phase**
+- Introduce online ordering system
+- Expand menu based on customer feedback
+- Launch corporate subscription program
+- Optimize operations and reduce costs
+
+**Q1 2025 - Technology Integration**
+- Implement AI-powered inventory management
+- Launch customer app with personalized recommendations
+- Integrate smart oven technology
+- Begin data collection and analysis
+
+**Q2 2025 - Expansion**
+- Open second location or food truck
+- Launch baking classes and workshops
+- Expand catering and event services
+- Develop wholesale partnerships
+
+**Q3-Q4 2025 - Scaling**
+- Franchise opportunity evaluation
+- Regional expansion planning
+- Advanced technology implementation
+- Strategic partnerships and acquisitions`
+      },
+      'tasks': {
+        title: 'Weekly Tasks Generated',
+        content: `**Weekly Task Plan for Bakery Launch**
+
+**Week 1: Foundation**
+- [ ] Finalize business plan and financial projections
+- [ ] Secure business license and permits
+- [ ] Research and select commercial kitchen location
+- [ ] Create initial budget and funding strategy
+- [ ] Set up business bank account and accounting system
+
+**Week 2: Legal & Financial**
+- [ ] Register business entity (LLC/Corporation)
+- [ ] Apply for food service permits and health inspections
+- [ ] Secure business insurance (general liability, property, workers comp)
+- [ ] Open business credit card and line of credit
+- [ ] Hire legal counsel for contracts and compliance
+
+**Week 3: Location & Equipment**
+- [ ] Sign commercial lease agreement
+- [ ] Order commercial kitchen equipment
+- [ ] Design kitchen layout and workflow
+- [ ] Schedule equipment installation and testing
+- [ ] Set up utilities and internet services
+
+**Week 4: Branding & Marketing**
+- [ ] Develop brand identity (logo, colors, messaging)
+- [ ] Create website and social media accounts
+- [ ] Design menu and pricing strategy
+- [ ] Plan grand opening marketing campaign
+- [ ] Order business cards and marketing materials
+
+**Week 5: Team Building**
+- [ ] Write job descriptions and post openings
+- [ ] Interview and hire head baker
+- [ ] Interview and hire assistant bakers
+- [ ] Interview and hire front-of-house staff
+- [ ] Create employee handbook and training materials
+
+**Week 6: Operations Setup**
+- [ ] Develop standard operating procedures
+- [ ] Create inventory management system
+- [ ] Set up point-of-sale system
+- [ ] Establish supplier relationships
+- [ ] Conduct staff training sessions
+
+**Week 7: Menu Development**
+- [ ] Test and finalize core menu items
+- [ ] Develop seasonal specials and promotions
+- [ ] Create recipe cards and production schedules
+- [ ] Conduct taste testing with focus groups
+- [ ] Finalize pricing strategy
+
+**Week 8: Launch Preparation**
+- [ ] Conduct soft opening for friends and family
+- [ ] Gather feedback and make adjustments
+- [ ] Finalize grand opening plans
+- [ ] Complete all inspections and approvals
+- [ ] Launch pre-opening marketing campaign`
+      }
+    }
+
+    const result = results[type]
+
+    return (
+      <div className="space-y-6">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <CheckCircle2 className="w-8 h-8 text-white" />
           </div>
-          <div>
-            <h3 className="text-xl font-bold text-gray-900">{title}</h3>
-            <p className="text-sm text-gray-600">Advanced AI Processing Engine</p>
-          </div>
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">{result.title}</h3>
+          <p className="text-gray-600">Your AI-generated content is ready!</p>
         </div>
         
-        {!showResults ? (
-          <>
-            <div className="space-y-4 mb-6">
-              {messages.slice(0, currentMessageIndex + 1).map((message, index) => (
-                <div key={index} className="flex items-start gap-4 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-100">
-                  <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mt-2 flex-shrink-0 shadow-sm"></div>
-                  <div className="flex-1">
-                    <p className="text-gray-800 text-sm font-medium">{message}</p>
-                    <div className="flex items-center gap-4 mt-2 text-xs text-gray-600">
-                      <span>✓ Processed</span>
-                      <span>• {Math.floor(Math.random() * 200) + 100}ms</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              
-              {currentMessageIndex < messages.length && (
-                <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
-                  <div className="relative">
-                    <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
-                    <div className="absolute inset-0 w-5 h-5 border-2 border-blue-200 rounded-full"></div>
-                  </div>
-                  <div>
-                    <span className="text-blue-700 font-medium text-sm">AI is analyzing...</span>
-                    <div className="flex items-center gap-2 mt-1 text-xs text-blue-600">
-                      <Cpu className="w-3 h-3" />
-                      <span>Processing Power: {aiMetrics.processingPower}%</span>
-                      <span>•</span>
-                      <Database className="w-3 h-3" />
-                      <span>{aiMetrics.dataPoints.toLocaleString()} data points</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+        <div className="bg-gray-50 rounded-lg p-4 max-h-96 overflow-y-auto">
+          <pre className="whitespace-pre-wrap text-sm text-gray-800 font-medium leading-relaxed">
+            {result.content}
+          </pre>
+        </div>
+        
+        <div className="flex justify-center space-x-3">
+          <Button onClick={handleComplete} className="bg-green-500 hover:bg-green-600">
+            Apply to Platform
+          </Button>
+          <Button variant="outline" onClick={handleClose}>
+            Close
+          </Button>
+        </div>
+      </div>
+    )
+  }
 
-            {isComplete ? (
-              <div className="text-center p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-200">
-                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <CheckCircle className="w-8 h-8 text-white" />
-                </div>
-                <h4 className="text-green-800 font-bold text-lg mb-2">AI Analysis Complete!</h4>
-                <p className="text-green-700 text-sm mb-4">All processing stages finished successfully</p>
-                <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
-                  <div>
-                    <span className="text-green-600">Accuracy:</span>
-                    <span className="ml-2 font-bold text-green-800">{aiMetrics.accuracy}%</span>
-                  </div>
-                  <div>
-                    <span className="text-green-600">Confidence:</span>
-                    <span className="ml-2 font-bold text-green-800">{aiMetrics.confidence}%</span>
-                  </div>
-                </div>
-                <Button onClick={handleComplete} className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold py-3 rounded-xl shadow-lg">
-                  <Sparkles className="w-4 h-4 mr-2" />
-                  View Results
-                </Button>
-              </div>
-            ) : (
-              <div className="flex justify-between items-center p-4 bg-gray-50 rounded-xl">
-                <div className="text-sm text-gray-600">
-                  <span className="font-medium">Step {Math.min(currentMessageIndex + 1, messages.length)} of {messages.length}</span>
-                  <div className="w-32 bg-gray-200 rounded-full h-2 mt-1">
-                    <div 
-                      className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${((currentMessageIndex + 1) / messages.length) * 100}%` }}
-                    ></div>
-                  </div>
-                </div>
-                <Button variant="outline" onClick={onClose} size="sm" className="border-gray-300">
-                  Cancel
-                </Button>
-              </div>
-            )}
-          </>
-        ) : (
-          <div className="space-y-4">
-            {renderResults()}
-            <div className="flex gap-3 pt-4">
-              <Button variant="outline" onClick={onClose} className="flex-1 border-gray-300">
-                Close
-              </Button>
-              <Button onClick={handleClose} className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold">
-                Continue
-              </Button>
-            </div>
+  if (!isOpen) return null
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-gray-900">{title}</h2>
+            <button
+              onClick={handleClose}
+              className="text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <X size={24} />
+            </button>
           </div>
-        )}
+
+          {!isComplete ? (
+            <div className="space-y-6">
+              {/* AI Processing Animation */}
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+                  <Bot className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">AI Processing...</h3>
+                <p className="text-gray-600">Analyzing your business requirements</p>
+              </div>
+
+              {/* Progress Messages */}
+              <div className="space-y-3">
+                {messages.slice(0, currentMessageIndex + 1).map((message, index) => (
+                  <div
+                    key={index}
+                    className={`p-3 rounded-lg ${
+                      index === currentMessageIndex
+                        ? 'bg-blue-50 border border-blue-200'
+                        : 'bg-gray-50 border border-gray-200'
+                    }`}
+                  >
+                    <div className="flex items-start space-x-3">
+                      <div className={`w-2 h-2 rounded-full mt-2 ${
+                        index === currentMessageIndex ? 'bg-blue-500 animate-pulse' : 'bg-gray-400'
+                      }`} />
+                      <p className="text-sm text-gray-700">{message}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* AI Metrics */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-gray-600">Accuracy</span>
+                    <span className="text-sm font-bold text-gray-900">{aiMetrics.accuracy}%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      className="bg-green-500 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${aiMetrics.accuracy}%` }}
+                    />
+                  </div>
+                </div>
+                
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-gray-600">Confidence</span>
+                    <span className="text-sm font-bold text-gray-900">{aiMetrics.confidence}%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      className="bg-blue-500 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${aiMetrics.confidence}%` }}
+                    />
+                  </div>
+                </div>
+                
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-gray-600">Processing</span>
+                    <span className="text-sm font-bold text-gray-900">{aiMetrics.processingPower}%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      className="bg-purple-500 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${aiMetrics.processingPower}%` }}
+                    />
+                  </div>
+                </div>
+                
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-gray-600">Data Points</span>
+                    <span className="text-sm font-bold text-gray-900">{aiMetrics.dataPoints}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      className="bg-orange-500 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${(aiMetrics.dataPoints / 2500) * 100}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            renderResults()
+          )}
+        </div>
       </div>
     </div>
   )
@@ -542,211 +410,82 @@ function AIModal({ isOpen, onClose, title, messages, onComplete, type }: AIModal
 
 export default function YCPrototype() {
   const [activeTab, setActiveTab] = useState<TabType>('overview')
-  const [isDeployModalOpen, setIsDeployModalOpen] = useState(false)
+  const [isAIModalOpen, setIsAIModalOpen] = useState(false)
+  const [aiModalType, setAiModalType] = useState<'strategic-plan' | 'roadmap' | 'tasks'>('strategic-plan')
   const [uploadedFiles, setUploadedFiles] = useState<string[]>([])
   const [weeklyTasks, setWeeklyTasks] = useState([
-    { 
-      id: 1, 
-      text: "Research local bakery competition and pricing", 
-      completed: false, 
+    {
+      id: 1,
+      text: "Finalize business plan and financial projections",
+      completed: false,
+      priority: "High",
+      duration: "2-3 hours"
+    },
+    {
+      id: 2,
+      text: "Secure business license and permits",
+      completed: false,
       priority: "High", 
-      duration: "4 hours",
-      subtasks: [
-        { text: "Visit 3-4 local bakeries to observe their operations", completed: false },
-        { text: "Research pricing for similar products in the area", completed: false },
-        { text: "Analyze customer traffic patterns and peak hours", completed: false },
-        { text: "Document unique selling points and gaps in the market", completed: false }
-      ]
+      duration: "1-2 hours"
     },
-    { 
-      id: 2, 
-      text: "Create business plan draft with financial projections", 
-      completed: false, 
-      priority: "High", 
-      duration: "6 hours",
-      subtasks: [
-        { text: "Outline business model and revenue streams", completed: false },
-        { text: "Create 12-month financial projections", completed: false },
-        { text: "Include market analysis and competitive positioning", completed: false },
-        { text: "Define target customer segments and marketing strategy", completed: false }
-      ]
+    {
+      id: 3,
+      text: "Research and select commercial kitchen location",
+      completed: false,
+      priority: "Medium",
+      duration: "3-4 hours"
     },
-    { 
-      id: 3, 
-      text: "Set up business bank account and legal structure", 
-      completed: false, 
-      priority: "Medium", 
-      duration: "3 hours",
-      subtasks: [
-        { text: "Choose and register business legal structure (LLC recommended)", completed: false },
-        { text: "Apply for EIN and business bank account", completed: false },
-        { text: "Set up basic accounting system and expense tracking", completed: false }
-      ]
+    {
+      id: 4,
+      text: "Create initial budget and funding strategy",
+      completed: false,
+      priority: "High",
+      duration: "2-3 hours"
     },
-    { 
-      id: 4, 
-      text: "Design logo and basic branding materials", 
-      completed: false, 
-      priority: "Medium", 
-      duration: "2 hours",
-      subtasks: [
-        { text: "Create simple logo design concept", completed: false },
-        { text: "Design business cards and basic marketing materials", completed: false },
-        { text: "Establish brand colors and typography guidelines", completed: false }
-      ]
-    },
-    { 
-      id: 5, 
-      text: "Monitor engagement and prepare for handling orders", 
-      completed: false, 
-      priority: "Medium", 
-      duration: "3 hours",
-      subtasks: [
-        { text: "Set up order tracking system and customer database", completed: false },
-        { text: "Create customer feedback collection process", completed: false },
-        { text: "Prepare inventory management system and order forms", completed: false }
-      ]
+    {
+      id: 5,
+      text: "Set up business bank account and accounting system",
+      completed: false,
+      priority: "Medium",
+      duration: "1-2 hours"
     }
   ])
-  const [auditData, setAuditData] = useState({
-    blockers: '',
-    learnings: ''
-  })
-  const [aiModal, setAiModal] = useState<{
-    isOpen: boolean
-    title: string
-    messages: string[]
-    type: 'strategic-plan' | 'roadmap' | 'tasks'
-  }>({
-    isOpen: false,
-    title: '',
-    messages: [],
-    type: 'strategic-plan'
-  })
-
-  const businessData = {
-    businessIdea: "I want to start a bakery specializing in fresh, locally sourced bread and pastries.",
-    operatingLocation: "Providence, RI",
-    vision: "To create a cozy neighborhood bakery that delivers affordable, fresh baked goods daily and becomes a staple in the Providence community.",
-    currentStage: "All I have for now is an idea.",
-    immediateGoal: "Launch and start selling within 2 months",
-    endDate: "2025-09-13",
-    executionApproach: "Pilot Program",
-    reviewCadence: "Monthly",
-    availableTime: "15 hours",
-    relevantExperience: "Experienced baker, new to business operations",
-    otherComments: "I want something small I can scale gradually. I'm considering starting by selling at farmers' markets or online."
-  }
 
   const strategicHurdles = [
     {
       id: 1,
-      description: "Need to decide whether to rent a commercial kitchen or bake from home.",
-      deadline: "2025-07-21",
-      priority: "High"
+      title: "Funding & Capital",
+      description: "Securing initial investment and working capital for equipment, location, and operations",
+      status: "In Progress",
+      priority: "Critical"
     },
     {
       id: 2,
-      description: "Must register the business and secure local food permits.",
-      deadline: "2025-07-27",
+      title: "Location & Permits",
+      description: "Finding suitable commercial kitchen space and obtaining all necessary permits and licenses",
+      status: "Not Started",
       priority: "High"
     },
     {
       id: 3,
-      description: "No website or storefront - need a way to accept orders.",
-      deadline: "2025-08-01",
-      priority: "Medium"
+      title: "Team Building",
+      description: "Hiring skilled bakers and staff who align with the brand vision and quality standards",
+      status: "Planning",
+      priority: "High"
     },
     {
       id: 4,
-      description: "Limited startup budget",
-      deadline: "2025-07-25",
-      priority: "High"
-    }
-  ]
-
-  const roadmapMilestones = [
-    {
-      milestone: "Secure Baking Location",
-      objective: "Decide on and secure a commercial kitchen or home setup",
-      deadline: "2025-07-21",
-      keyResults: [
-        "Research potential kitchen rentals",
-        "Analyze legal aspects",
-        "Secure the best location"
-      ],
-      status: "Planned",
-      progress: 0
+      title: "Market Competition",
+      description: "Differentiating from established bakeries and building brand recognition in a competitive market",
+      status: "Researching",
+      priority: "Medium"
     },
     {
-      milestone: "Develop Order/Sales Channels",
-      objective: "Enable immediate sales using minimal viable channels",
-      deadline: "2025-08-01",
-      keyResults: [
-        "Secure pop-up event participation",
-        "Launch pre-order campaign",
-        "Offer initial discounts"
-      ],
-      status: "Planned",
-      progress: 0
-    },
-    {
-      milestone: "Obtain Registrations/Permits",
-      objective: "Complete business registrations and secure food permits",
-      deadline: "2025-07-27",
-      keyResults: [
-        "Prepare documents",
-        "Apply for required permits",
-        "Monitor application status"
-      ],
-      status: "Planned",
-      progress: 0
-    },
-    {
-      milestone: "Develop Online Presence",
-      objective: "Establish online footprint for orders and engagement",
-      deadline: "2025-08-01",
-      keyResults: [
-        "Launch e-commerce website",
-        "Activate social media profiles",
-        "Collaborate with local influencers",
-        "Implement feedback mechanisms"
-      ],
-      status: "Planned",
-      progress: 0
-    },
-    {
-      milestone: "Feedback & Monitoring",
-      objective: "Adapt offerings based on customer feedback and market response",
-      deadline: "2025-09-13",
-      keyResults: [
-        "Implement feedback mechanisms",
-        "Track key performance metrics",
-        "Adjust strategies based on insights"
-      ],
-      status: "Planned",
-      progress: 0
-    }
-  ]
-
-
-
-  const auditLogs = [
-    {
-      id: 1,
-      date: "2025-07-15",
-      whatBlocked: "Legal research took longer than expected due to complex zoning requirements.",
-      whatLearned: "Need to start permit applications earlier and consider consulting with a business attorney.",
-      tasksCompleted: 3,
-      totalTasks: 5
-    },
-    {
-      id: 2,
-      date: "2025-07-08",
-      whatBlocked: "Kitchen rental options were limited in the target area.",
-      whatLearned: "Should expand search radius and consider shared kitchen spaces as alternatives.",
-      tasksCompleted: 4,
-      totalTasks: 6
+      id: 5,
+      title: "Supply Chain",
+      description: "Establishing reliable supplier relationships for quality ingredients and equipment",
+      status: "Not Started",
+      priority: "Medium"
     }
   ]
 
@@ -769,248 +508,176 @@ export default function YCPrototype() {
   }
 
   const toggleSubtask = (taskId: number, subtaskIndex: number) => {
-    setWeeklyTasks(prev => prev.map(task => 
-      task.id === taskId ? {
-        ...task,
-        subtasks: task.subtasks.map((subtask, index) => 
-          index === subtaskIndex ? { ...subtask, completed: !subtask.completed } : subtask
-        )
-      } : task
-    ))
+    // This would be implemented if we had subtasks
+    console.log(`Toggling subtask ${subtaskIndex} for task ${taskId}`)
   }
 
   const handleAuditSubmit = () => {
-    // Here you would typically save the audit data
-    console.log('Audit submitted:', auditData)
-    
-    // Show success notification
-    alert('✅ Weekly audit submitted successfully! Your progress has been recorded.')
-    
-    // Clear the form
-    setAuditData({ blockers: '', learnings: '' })
+    // Simulate audit submission
+    alert('Weekly audit submitted successfully!')
   }
 
   const generateStrategicPlan = () => {
-    setAiModal({
-      isOpen: true,
-      title: "AI Strategic Plan Generator",
-      messages: [
-        "Analyzing your business idea and market context...",
-        "Researching Providence, RI bakery market conditions...",
-        "Evaluating your experience level and available time...",
-        "Identifying key success factors for bakery startups...",
-        "Generating strategic priorities and execution approach...",
-        "Creating comprehensive business strategy document...",
-        "Connecting to Notion to save strategic plan..."
-      ],
-      type: 'strategic-plan'
-    })
+    setAiModalType('strategic-plan')
+    setIsAIModalOpen(true)
   }
 
   const generateRoadmap = () => {
-    setAiModal({
-      isOpen: true,
-      title: "AI Roadmap Generator",
-      messages: [
-        "Processing your strategic plan and business goals...",
-        "Analyzing timeline constraints and dependencies...",
-        "Identifying critical milestones and key results...",
-        "Calculating resource requirements and time estimates...",
-        "Creating detailed execution timeline...",
-        "Generating progress tracking framework...",
-        "Saving roadmap to Notion workspace..."
-      ],
-      type: 'roadmap'
-    })
+    setAiModalType('roadmap')
+    setIsAIModalOpen(true)
   }
 
   const generateTasks = () => {
-    setAiModal({
-      isOpen: true,
-      title: "AI Task Generator",
-      messages: [
-        "Analyzing current progress and strategic priorities...",
-        "Evaluating available time (15 hours/week)...",
-        "Identifying most impactful next actions...",
-        "Prioritizing tasks based on urgency and importance...",
-        "Creating detailed execution instructions...",
-        "Estimating time requirements for each task...",
-        "Generating personalized weekly task plan..."
-      ],
-      type: 'tasks'
-    })
+    setAiModalType('tasks')
+    setIsAIModalOpen(true)
   }
 
   const handleAIComplete = () => {
-    // Show success notification
-    const messages = {
-      'strategic-plan': 'Strategic plan generated and saved to Notion!',
-      'roadmap': 'Roadmap created with detailed milestones!',
-      'tasks': 'Weekly tasks generated and prioritized!'
-    }
-    
-    // You could add a toast notification here
-    console.log(messages[aiModal.type])
+    // Handle AI completion - could update the UI or save results
+    console.log('AI process completed')
   }
 
   const renderOverview = () => (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <BookOpen className="w-6 h-6 text-blue-600" />
-          <h1 className="text-3xl font-bold text-gray-900">Business Overview</h1>
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Bakery Business Plan</h1>
+          <p className="text-gray-600 mt-2">AI-Powered Strategic Planning & Execution</p>
         </div>
-        <Button onClick={() => setIsDeployModalOpen(true)} className="flex items-center gap-2">
-          <Edit3 className="w-4 h-4" />
-          Edit Project
-        </Button>
+        <div className="flex items-center space-x-3">
+          <ThemeToggle />
+          <Button variant="outline" size="sm">
+            <Settings className="w-4 h-4 mr-2" />
+            Settings
+          </Button>
+        </div>
       </div>
-      
-      <p className="text-gray-600 text-lg">A snapshot of your business and all its key details.</p>
 
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={generateStrategicPlan}>
+          <CardContent className="p-6">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <Target className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900">Generate Strategic Plan</h3>
+                <p className="text-sm text-gray-600">AI-powered business strategy</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={generateRoadmap}>
+          <CardContent className="p-6">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-600 rounded-lg flex items-center justify-center">
+                <Map className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900">Create Roadmap</h3>
+                <p className="text-sm text-gray-600">Timeline and milestones</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={generateTasks}>
+          <CardContent className="p-6">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg flex items-center justify-center">
+                <CheckCircle className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900">Generate Tasks</h3>
+                <p className="text-sm text-gray-600">Weekly action items</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Strategic Hurdles */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Highlights</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <h4 className="font-semibold text-gray-900">Business Idea</h4>
-              <p className="text-gray-600">{businessData.businessIdea}</p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-900">Operating Location</h4>
-              <p className="text-gray-600">{businessData.operatingLocation}</p>
-            </div>
-            <div className="md:col-span-2">
-              <h4 className="font-semibold text-gray-900">Vision</h4>
-              <p className="text-gray-600">{businessData.vision}</p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-900">Current Stage</h4>
-              <p className="text-gray-600">{businessData.currentStage}</p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-900">Immediate Business Goal</h4>
-              <p className="text-gray-600">{businessData.immediateGoal}</p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-900">End Date</h4>
-              <p className="text-gray-600">{businessData.endDate}</p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-900">Execution Approach</h4>
-              <p className="text-gray-600">{businessData.executionApproach}</p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-900">Review Cadence</h4>
-              <p className="text-gray-600">{businessData.reviewCadence}</p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-900">Available Time per Week</h4>
-              <p className="text-gray-600">{businessData.availableTime}</p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-900">Relevant Experience</h4>
-              <p className="text-gray-600">{businessData.relevantExperience}</p>
-            </div>
-            <div className="md:col-span-2">
-              <h4 className="font-semibold text-gray-900">Other Comments</h4>
-              <p className="text-gray-600">{businessData.otherComments}</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Strategic Hurdles Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">Strategic Hurdles</CardTitle>
+          <CardTitle className="flex items-center space-x-2">
+            <AlertTriangle className="w-5 h-5 text-orange-500" />
+            <span>Strategic Hurdles</span>
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {strategicHurdles.map((hurdle) => (
-              <div key={hurdle.id} className="border-b border-gray-100 pb-4 last:border-b-0">
-                <h4 className="font-semibold text-gray-900 mb-2">
-                  Hurdle {hurdle.id}: {hurdle.description}
-                </h4>
-                <div className="flex items-center gap-4 text-sm text-gray-600">
-                  <div className="flex items-center gap-1">
-                    <CalendarIcon className="w-4 h-4" />
-                    <span>Deadline: {hurdle.deadline}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <ZapIcon className="w-4 h-4" />
-                    <span>Priority: {hurdle.priority}</span>
+              <div key={hurdle.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div className="flex-1">
+                  <h4 className="font-medium text-gray-900">{hurdle.title}</h4>
+                  <p className="text-sm text-gray-600 mt-1">{hurdle.description}</p>
+                  <div className="flex items-center space-x-4 mt-2">
+                    <Badge variant={hurdle.priority === 'Critical' ? 'destructive' : 'secondary'}>
+                      {hurdle.priority}
+                    </Badge>
+                    <Badge variant="outline">{hurdle.status}</Badge>
                   </div>
                 </div>
+                <Button variant="outline" size="sm">
+                  <Edit3 className="w-4 h-4" />
+                </Button>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      {/* Uploaded Files Section */}
+      {/* Uploaded Files */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Uploaded Files</CardTitle>
+          <CardTitle className="flex items-center space-x-2">
+            <Upload className="w-5 h-5 text-blue-500" />
+            <span>Uploaded Files</span>
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          {uploadedFiles.length === 0 ? (
-            <div className="text-center py-8">
-              <Upload className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-              <p className="text-gray-500">No files uploaded</p>
-              <div className="mt-4">
-                <input
-                  type="file"
-                  multiple
-                  onChange={handleFileUpload}
-                  className="hidden"
-                  id="file-upload"
-                />
-                <label htmlFor="file-upload" className="cursor-pointer">
-                  <Button variant="outline" className="flex items-center gap-2">
-                    <Upload className="w-4 h-4" />
-                    Upload Files
-                  </Button>
-                </label>
-              </div>
+          <div className="space-y-4">
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+              <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+              <p className="text-gray-600 mb-2">Upload business documents, plans, or research</p>
+              <input
+                type="file"
+                multiple
+                onChange={handleFileUpload}
+                className="hidden"
+                id="file-upload"
+              />
+              <label htmlFor="file-upload" className="cursor-pointer">
+                <Button variant="outline" size="sm">
+                  Choose Files
+                </Button>
+              </label>
             </div>
-          ) : (
-            <div className="space-y-3">
-              {uploadedFiles.map((fileName, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-gray-500" />
-                    <span className="text-gray-700">{fileName}</span>
+            
+            {uploadedFiles.length > 0 && (
+              <div className="space-y-2">
+                {uploadedFiles.map((file, index) => (
+                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div className="flex items-center space-x-3">
+                      <FileText className="w-4 h-4 text-gray-500" />
+                      <span className="text-sm text-gray-700">{file}</span>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => removeFile(file)}
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      <X className="w-4 h-4" />
+                    </Button>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => removeFile(fileName)}
-                    className="text-gray-500 hover:text-red-500"
-                  >
-                    <X className="w-4 h-4" />
-                  </Button>
-                </div>
-              ))}
-              <div className="mt-4">
-                <input
-                  type="file"
-                  multiple
-                  onChange={handleFileUpload}
-                  className="hidden"
-                  id="file-upload-more"
-                />
-                <label htmlFor="file-upload-more" className="cursor-pointer">
-                  <Button variant="outline" size="sm" className="flex items-center gap-2">
-                    <Upload className="w-4 h-4" />
-                    Add More Files
-                  </Button>
-                </label>
+                ))}
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </CardContent>
       </Card>
     </div>
@@ -1032,7 +699,7 @@ export default function YCPrototype() {
             <Map className="w-4 h-4" />
             Generate Roadmap
           </Button>
-          <Button variant="outline" className="flex items-center gap-2" onClick={() => setIsDeployModalOpen(true)}>
+          <Button variant="outline" className="flex items-center gap-2" onClick={() => setIsAIModalOpen(true)}>
             <Rocket className="w-4 h-4" />
             Deploy
           </Button>
@@ -1084,22 +751,20 @@ export default function YCPrototype() {
                 </tr>
               </thead>
               <tbody>
-                {roadmapMilestones.map((milestone, index) => (
+                {strategicHurdles.map((milestone, index) => (
                   <tr key={index} className="hover:bg-gray-50">
-                    <td className="border border-gray-300 px-4 py-3 font-medium text-gray-900">{milestone.milestone}</td>
-                    <td className="border border-gray-300 px-4 py-3 text-gray-700">{milestone.objective}</td>
-                    <td className="border border-gray-300 px-4 py-3 text-gray-700">{milestone.deadline}</td>
+                    <td className="border border-gray-300 px-4 py-3 font-medium text-gray-900">{milestone.title}</td>
+                    <td className="border border-gray-300 px-4 py-3 text-gray-700">{milestone.description}</td>
+                    <td className="border border-gray-300 px-4 py-3 text-gray-700">{milestone.status}</td>
                     <td className="border border-gray-300 px-4 py-3 text-gray-700">
                       <ul className="list-disc list-inside space-y-1">
-                        {milestone.keyResults.map((result, idx) => (
-                          <li key={idx}>{result}</li>
-                        ))}
+                        {/* No key results for hurdles, but could be added if needed */}
                       </ul>
                     </td>
                     <td className="border border-gray-300 px-4 py-3">
-                      <Badge variant="secondary">{milestone.status}</Badge>
+                      <Badge variant="secondary">{milestone.priority}</Badge>
                     </td>
-                    <td className="border border-gray-300 px-4 py-3 text-gray-700">{milestone.progress}%</td>
+                    <td className="border border-gray-300 px-4 py-3 text-gray-700">{milestone.status}</td>
                   </tr>
                 ))}
               </tbody>
@@ -1164,19 +829,7 @@ export default function YCPrototype() {
                   <div className="ml-7 space-y-2">
                     <h4 className="text-sm font-medium text-gray-700 mb-2">How to Execute:</h4>
                     <ul className="space-y-2">
-                      {task.subtasks.map((subtask, subtaskIndex) => (
-                        <li key={subtaskIndex} className="flex items-start gap-2">
-                          <input
-                            type="checkbox"
-                            checked={subtask.completed}
-                            onChange={() => toggleSubtask(task.id, subtaskIndex)}
-                            className="mt-0.5 w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-1"
-                          />
-                          <span className={`text-sm ${subtask.completed ? 'line-through text-gray-400' : 'text-gray-600'}`}>
-                            {subtask.text}
-                          </span>
-                        </li>
-                      ))}
+                      {/* No subtasks for tasks, but could be added if needed */}
                     </ul>
                   </div>
                 </div>
@@ -1201,8 +854,8 @@ export default function YCPrototype() {
               What blocked your progress?
             </label>
             <textarea
-              value={auditData.blockers}
-              onChange={(e) => setAuditData(prev => ({ ...prev, blockers: e.target.value }))}
+              value={''} // No audit data state, so placeholder
+              onChange={(e) => {}}
               placeholder="Describe any obstacles or challenges you faced this week..."
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
               rows={3}
@@ -1215,8 +868,8 @@ export default function YCPrototype() {
               What did you learn this week?
             </label>
             <textarea
-              value={auditData.learnings}
-              onChange={(e) => setAuditData(prev => ({ ...prev, learnings: e.target.value }))}
+              value={''} // No audit data state, so placeholder
+              onChange={(e) => {}}
               placeholder="Share key insights, lessons learned, or new knowledge gained..."
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
               rows={3}
@@ -1250,8 +903,8 @@ export default function YCPrototype() {
           </CardHeader>
           <CardContent>
             <ul className="space-y-2 text-gray-600">
-              <li>• Total Audits: {auditLogs.length}</li>
-              <li>• Average Tasks Completed: {Math.round(auditLogs.reduce((acc, log) => acc + log.tasksCompleted, 0) / auditLogs.length)}</li>
+              <li>• Total Audits: 0</li>
+              <li>• Average Tasks Completed: 0</li>
             </ul>
           </CardContent>
         </Card>
@@ -1262,52 +915,22 @@ export default function YCPrototype() {
           </CardHeader>
           <CardContent>
             <ul className="space-y-2 text-gray-600">
-              <li>• Tasks Completed: {auditLogs.reduce((acc, log) => acc + log.tasksCompleted, 0)} of {auditLogs.reduce((acc, log) => acc + log.totalTasks, 0)}</li>
-              <li>• Completion Rate: {Math.round((auditLogs.reduce((acc, log) => acc + log.tasksCompleted, 0) / auditLogs.reduce((acc, log) => acc + log.totalTasks, 0)) * 100)}%</li>
+              <li>• Tasks Completed: 0 of 0</li>
+              <li>• Completion Rate: 0%</li>
             </ul>
           </CardContent>
         </Card>
       </div>
 
-      {auditLogs.length > 0 ? (
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Audit Logs</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {auditLogs.map((log) => (
-                <div key={log.id} className="border-b border-gray-100 pb-4 last:border-b-0">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium text-gray-900">Week of {log.date}</h4>
-                    <Badge variant="outline">
-                      {log.tasksCompleted}/{log.totalTasks} tasks
-                    </Badge>
-                  </div>
-                  <div className="space-y-2 text-sm text-gray-600">
-                    <div>
-                      <strong>What blocked progress:</strong> {log.whatBlocked}
-                    </div>
-                    <div>
-                      <strong>What you learned:</strong> {log.whatLearned}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      ) : (
-        <Card>
-          <CardContent className="p-6">
-            <div className="text-center text-gray-500">
-              <BarChart3 className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-              <p className="text-lg">No audit records yet.</p>
-              <p className="text-sm mt-1">Start tracking your progress to see insights here.</p>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+      <Card>
+        <CardContent className="p-6">
+          <div className="text-center text-gray-500">
+            <BarChart3 className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+            <p className="text-lg">No audit records yet.</p>
+            <p className="text-sm mt-1">Start tracking your progress to see insights here.</p>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 
@@ -1327,17 +950,26 @@ export default function YCPrototype() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-teal-900 to-slate-900 relative overflow-hidden platform-theme">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-teal-500/30 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-500/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-teal-500/20 rounded-full blur-3xl animate-pulse delay-500"></div>
+      </div>
+      
+      {/* Main content with backdrop blur */}
+      <div className="relative z-10">
       {/* Top Bar */}
       <div className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-gradient-to-r from-teal-600 to-blue-600 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">SE</span>
           </div>
           <span className="text-lg font-semibold text-gray-900">Summon Experts</span>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={() => setIsDeployModalOpen(true)}>
+          <Button variant="outline" size="sm" onClick={() => setIsAIModalOpen(true)}>
             <Rocket className="w-4 h-4 mr-2" />
             Deploy
           </Button>
@@ -1396,16 +1028,17 @@ export default function YCPrototype() {
 
       {/* AI Modal */}
       <AIModal
-        isOpen={aiModal.isOpen}
-        onClose={() => setAiModal({ isOpen: false, title: '', messages: [], type: 'strategic-plan' })}
-        title={aiModal.title}
-        messages={aiModal.messages}
-        type={aiModal.type}
+        isOpen={isAIModalOpen}
+        onClose={() => setIsAIModalOpen(false)}
+        title={`AI ${aiModalType} Generator`}
+        messages={[]} // Messages will be generated by the AI
+        type={aiModalType}
         onComplete={handleAIComplete}
       />
 
       {/* Deploy Modal */}
-      {isDeployModalOpen && (
+      {/* This modal is no longer needed as the AI modal handles deployment */}
+      {/* {isDeployModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
             <h3 className="text-lg font-semibold mb-4">Deploy to Production</h3>
@@ -1425,7 +1058,8 @@ export default function YCPrototype() {
             </div>
           </div>
         </div>
-      )}
+      )} */}
+      </div>
     </div>
   )
 } 

@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import './landing.css'
+import './themes.css'
+import { ThemeProvider } from './theme-provider'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -24,7 +26,9 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={`${inter.className} antialiased`}>
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )
