@@ -4,85 +4,80 @@
  * Integrates with actual Notion API for real functionality
  */
 
-import { notionService } from '@/lib/notion'
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(req: Request) {
+let notion: any = null;
+
+// Only initialize Notion if API key is available
+if (process.env.NOTION_SECRET) {
   try {
-    const { action, content, pageId, prompt } = await req.json();
-    
-    // Validate input
-    if (!action || typeof action !== 'string') {
-      return Response.json(
-        { error: 'Invalid action provided' },
-        { status: 400 }
-      );
+    const { Client } = require('@notionhq/client');
+    notion = new Client({
+      auth: process.env.NOTION_SECRET,
+    });
+  } catch (error) {
+    console.warn('Notion initialization failed:', error);
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    if (!notion) {
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Notion API not configured. Please set NOTION_SECRET environment variable.' 
+      }, { status: 503 });
     }
 
-    if (!pageId) {
-      return Response.json(
-        { error: 'Page ID is required' },
-        { status: 400 }
-      );
-    }
-
-    let result;
+    const { action, parameters } = await request.json();
     
     switch (action) {
-      case 'read':
-        try {
-          const pageContent = await notionService.getPageTextContent(pageId);
-          result = pageContent || 'No content found on this page';
-        } catch (error) {
-          result = `Error reading page: ${error instanceof Error ? error.message : 'Unknown error'}`;
-        }
-        break;
+      case 'read_page':
+        const page = await notion.pages.retrieve({ page_id: parameters.pageId });
+        return NextResponse.json({ success: true, data: page });
         
-      case 'write':
-        try {
-          await notionService.writeToPage(pageId, content || '');
-          result = `Content successfully written to Notion page`;
-        } catch (error) {
-          result = `Error writing to page: ${error instanceof Error ? error.message : 'Unknown error'}`;
-        }
-        break;
+      case 'search_pages':
+        const searchResults = await notion.search({
+          query: parameters.query,
+          filter: { property: 'object', value: 'page' }
+        });
+        return NextResponse.json({ success: true, data: searchResults });
         
-      case 'create-ai-block':
-        try {
-          if (!prompt) {
-            throw new Error('Prompt is required for AI block creation');
-          }
-          await notionService.createAIBlock(pageId, content || 'AI response', prompt);
-          result = `AI block successfully created in Notion`;
-        } catch (error) {
-          result = `Error creating AI block: ${error instanceof Error ? error.message : 'Unknown error'}`;
-        }
-        break;
+      case 'create_page':
+        const newPage = await notion.pages.create({
+          parent: { database_id: parameters.databaseId },
+          properties: parameters.properties
+        });
+        return NextResponse.json({ success: true, data: newPage });
         
-      case 'summarize':
-        try {
-          const pageContent = await notionService.getPageTextContent(pageId);
-          result = `Summary of page content: ${pageContent.substring(0, 200)}...`;
-        } catch (error) {
-          result = `Error summarizing page: ${error instanceof Error ? error.message : 'Unknown error'}`;
-        }
-        break;
+      case 'update_page':
+        const updatedPage = await notion.pages.update({
+          page_id: parameters.pageId,
+          properties: parameters.properties
+        });
+        return NextResponse.json({ success: true, data: updatedPage });
+        
+      case 'query_database':
+        const database = await notion.databases.query({
+          database_id: parameters.databaseId,
+          filter: parameters.filter
+        });
+        return NextResponse.json({ success: true, data: database });
         
       default:
-        result = `Unknown action: ${action}`;
+        return NextResponse.json({ success: false, error: 'Unknown action' }, { status: 400 });
     }
-    
-    return Response.json({
-      result,
-      timestamp: new Date().toISOString(),
-      action,
-      pageId
-    });
-
   } catch (error) {
     console.error('Notion API error:', error);
-    return Response.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Unknown error' 
+    }, { status: 500 });
   }
+}
+
+export async function GET() {
+  return NextResponse.json({ 
+    status: notion ? 'Notion API ready' : 'Notion API not configured' 
+  });
 } 

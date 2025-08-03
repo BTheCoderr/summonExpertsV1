@@ -21,12 +21,31 @@ import {
   MessageCircle,
   Rocket,
   Zap,
-  Target
+  Target,
+  User,
+  Building,
+  Globe,
+  Server,
+  Workflow,
+  Bot,
+  Shield
 } from 'lucide-react';
 
 export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    role: '',
+    businessIdea: '',
+    timeline: '',
+    phone: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,11 +79,64 @@ export default function LandingPage() {
   };
 
   const handleCTAClick = () => {
-    scrollToSection('early-offer');
+    setIsFormOpen(true);
   };
 
   const handleTextClick = () => {
-    scrollToSection('early-offer');
+    setIsFormOpen(true);
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      // Send data to our API endpoint
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log('Lead captured successfully:', result);
+        setSubmitSuccess(true);
+        
+        // Reset form after 3 seconds
+        setTimeout(() => {
+          setSubmitSuccess(false);
+          setIsFormOpen(false);
+          setFormData({
+            name: '',
+            email: '',
+            company: '',
+            role: '',
+            businessIdea: '',
+            timeline: '',
+            phone: ''
+          });
+        }, 3000);
+      } else {
+        console.error('Failed to submit form:', result.error);
+        alert('Failed to submit form. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Network error. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
   const navItems = [
@@ -78,6 +150,184 @@ export default function LandingPage() {
 
   return (
     <div className="App">
+      {/* Lead Capture Form Modal */}
+      {isFormOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="bg-white rounded-2xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto"
+          >
+            {!submitSuccess ? (
+              <>
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900">Get Early Access</h2>
+                  <button
+                    onClick={() => setIsFormOpen(false)}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <X size={24} />
+                  </button>
+                </div>
+                
+                <p className="text-gray-600 mb-6">
+                  Join our early access program and be among the first to experience the future of business planning.
+                </p>
+                
+                <form onSubmit={handleFormSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="John Doe"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="john@example.com"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="+1 (555) 123-4567"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Company/Organization
+                    </label>
+                    <input
+                      type="text"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Your Company"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Role
+                    </label>
+                    <select
+                      name="role"
+                      value={formData.role}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
+                      <option value="">Select your role</option>
+                      <option value="founder">Founder</option>
+                      <option value="co-founder">Co-Founder</option>
+                      <option value="entrepreneur">Entrepreneur</option>
+                      <option value="business-owner">Business Owner</option>
+                      <option value="startup-employee">Startup Employee</option>
+                      <option value="consultant">Consultant</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Business Idea/Project
+                    </label>
+                    <textarea
+                      name="businessIdea"
+                      value={formData.businessIdea}
+                      onChange={handleInputChange}
+                      rows={3}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Briefly describe your business idea or project..."
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Timeline to Launch
+                    </label>
+                    <select
+                      name="timeline"
+                      value={formData.timeline}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
+                      <option value="">Select timeline</option>
+                      <option value="immediately">Immediately</option>
+                      <option value="1-3-months">1-3 months</option>
+                      <option value="3-6-months">3-6 months</option>
+                      <option value="6-12-months">6-12 months</option>
+                      <option value="12-plus-months">12+ months</option>
+                    </select>
+                  </div>
+                  
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? (
+                      <div className="flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                        Submitting...
+                      </div>
+                    ) : (
+                      'Get Early Access'
+                    )}
+                  </button>
+                </form>
+                
+                <p className="text-xs text-gray-500 mt-4 text-center">
+                  We'll contact you within 24 hours to discuss your needs and provide early access.
+                </p>
+              </>
+            ) : (
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle className="w-8 h-8 text-green-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Thank You!</h3>
+                <p className="text-gray-600 mb-4">
+                  We've received your early access request. Our team will contact you within 24 hours to discuss your needs and provide access to the platform.
+                </p>
+                <div className="space-y-2 text-sm text-gray-500">
+                  <p>📧 Check your email for confirmation</p>
+                  <p>📞 We'll call you at {formData.phone || formData.email}</p>
+                  <p>🚀 Get ready to transform your business!</p>
+                </div>
+              </div>
+            )}
+          </motion.div>
+        </div>
+      )}
+
       {/* Navigation */}
       <nav className="navbar">
         <div className="nav-container">
@@ -100,22 +350,27 @@ export default function LandingPage() {
                 {item.label}
               </button>
             ))}
-            <Link href="/demo" className="nav-link cta-nav">
-              Try Demo
-            </Link>
-            <ThemeToggle />
           </div>
           
-          <button 
-            className="mobile-menu-btn"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="nav-actions">
+            <ThemeToggle />
+            <button
+              className="mobile-menu-button"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
         
+        {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="mobile-menu">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="mobile-menu"
+          >
             {navItems.map((item) => (
               <button
                 key={item.id}
@@ -125,37 +380,57 @@ export default function LandingPage() {
                 {item.label}
               </button>
             ))}
-            <Link href="/demo" className="mobile-nav-link cta-nav">
-              Try Demo
-            </Link>
-            <div className="mobile-nav-link">
-              <ThemeToggle />
-            </div>
-          </div>
+          </motion.div>
         )}
       </nav>
 
       {/* Hero Section */}
       <section id="hero" className="hero-section">
+        <div className="hero-background">
+          <div className="hero-overlay"></div>
+        </div>
+        
         <div className="container">
           <div className="hero-content">
-            <motion.h1 
-              className="hero-headline"
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="hero-title"
+            >
+              Transform Your Business Idea Into
+              <span className="gradient-text"> Reality</span>
+            </motion.h1>
+            
+            <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
+              className="hero-subtitle"
             >
-              AI-Powered Business Execution Platform
-            </motion.h1>
+              AI-powered business planning platform that helps founders and entrepreneurs 
+              create comprehensive strategies, identify hurdles, and execute with confidence.
+            </motion.p>
             
-            <motion.p 
-              className="hero-subheadline"
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
+              className="hero-stats"
             >
-              Transform your business ideas into actionable plans with AI-driven insights, strategic roadmaps, and automated task management.
-            </motion.p>
+              <div className="stat">
+                <div className="stat-number">50+</div>
+                <div className="stat-label">Strategic Plans Generated</div>
+              </div>
+              <div className="stat">
+                <div className="stat-number">85%</div>
+                <div className="stat-label">User Satisfaction</div>
+              </div>
+              <div className="stat">
+                <div className="stat-number">5min</div>
+                <div className="stat-label">Setup Time</div>
+              </div>
+            </motion.div>
             
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -496,6 +771,119 @@ export default function LandingPage() {
                   </span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Advanced Features Section */}
+      <section className="section advanced-features">
+        <div className="container">
+          <div className="section-content">
+            <motion.h2 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              Advanced Agent Fleet Features
+            </motion.h2>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="section-subtitle text-center"
+            >
+              Production-ready multi-agent orchestration with enterprise-grade security
+            </motion.p>
+            
+            <div className="features-grid">
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                viewport={{ once: true }}
+                className="feature-card"
+              >
+                <Link href="/fleet-dashboard" className="feature-link">
+                  <div className="feature-icon">
+                    <Server size={32} />
+                  </div>
+                  <h3>Fleet Dashboard</h3>
+                  <p>Real-time monitoring, health checks, auto-scaling, and performance analytics for your agent fleet</p>
+                  <div className="feature-tags">
+                    <span className="tag">Monitoring</span>
+                    <span className="tag">Auto-scaling</span>
+                    <span className="tag">Analytics</span>
+                  </div>
+                </Link>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                viewport={{ once: true }}
+                className="feature-card"
+              >
+                <Link href="/workflow-builder" className="feature-link">
+                  <div className="feature-icon">
+                    <Workflow size={32} />
+                  </div>
+                  <h3>Visual Workflow Builder</h3>
+                  <p>Drag-and-drop interface for creating complex multi-agent workflows with conditional routing</p>
+                  <div className="feature-tags">
+                    <span className="tag">Visual Builder</span>
+                    <span className="tag">Drag & Drop</span>
+                    <span className="tag">Conditional Logic</span>
+                  </div>
+                </Link>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                viewport={{ once: true }}
+                className="feature-card"
+              >
+                <Link href="/agent-test" className="feature-link">
+                  <div className="feature-icon">
+                    <Bot size={32} />
+                  </div>
+                  <h3>Agent CLI</h3>
+                  <p>Interactive command-line interface for testing and debugging agent interactions in real-time</p>
+                  <div className="feature-tags">
+                    <span className="tag">CLI</span>
+                    <span className="tag">Testing</span>
+                    <span className="tag">Debugging</span>
+                  </div>
+                </Link>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                viewport={{ once: true }}
+                className="feature-card"
+              >
+                <Link href="/demo" className="feature-link">
+                  <div className="feature-icon">
+                    <Shield size={32} />
+                  </div>
+                  <h3>Security & Trust</h3>
+                  <p>Enterprise-grade authentication, authorization, input validation, and comprehensive audit trails</p>
+                  <div className="feature-tags">
+                    <span className="tag">Authentication</span>
+                    <span className="tag">Authorization</span>
+                    <span className="tag">Audit Trails</span>
+                  </div>
+                </Link>
+              </motion.div>
             </div>
           </div>
         </div>
