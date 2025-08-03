@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -23,6 +23,7 @@ interface TaskResult {
   validatorOut: string;
   success: boolean;
   forking_enabled?: boolean;
+  supabase_connected?: boolean;
 }
 
 export default function MVPTaskRunner() {
@@ -31,6 +32,22 @@ export default function MVPTaskRunner() {
   const [result, setResult] = useState<TaskResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [enableForking, setEnableForking] = useState(false);
+  const [supabaseStatus, setSupabaseStatus] = useState<'checking' | 'connected' | 'disconnected'>('checking');
+
+  // Check Supabase connection on component mount
+  useEffect(() => {
+    checkSupabaseConnection();
+  }, []);
+
+  const checkSupabaseConnection = async () => {
+    try {
+      const res = await fetch('/api/mvp-orchestrator');
+      const data = await res.json();
+      setSupabaseStatus(data.supabase_connected ? 'connected' : 'disconnected');
+    } catch (error) {
+      setSupabaseStatus('disconnected');
+    }
+  };
 
   async function runTask() {
     if (!input.trim()) return;
@@ -74,6 +91,34 @@ export default function MVPTaskRunner() {
         <div className="text-center">
           <h1 className="text-4xl font-bold text-white mb-4">Summon Experts - Multi-Agent Infrastructure</h1>
           <p className="text-gray-300">Test the 3-agent pipeline: Researcher → Summarizer → Validator</p>
+          
+          {/* Supabase Status */}
+          <div className="mt-4 flex justify-center">
+            <Badge 
+              variant="secondary" 
+              className={
+                supabaseStatus === 'connected' 
+                  ? 'bg-green-500/20 text-green-400' 
+                  : supabaseStatus === 'checking'
+                  ? 'bg-yellow-500/20 text-yellow-400'
+                  : 'bg-red-500/20 text-red-400'
+              }
+            >
+              {supabaseStatus === 'connected' && '✅ Supabase Connected'}
+              {supabaseStatus === 'checking' && '⏳ Checking Connection...'}
+              {supabaseStatus === 'disconnected' && '❌ Supabase Disconnected'}
+            </Badge>
+          </div>
+          
+          {/* Supabase Setup Note */}
+          {supabaseStatus === 'disconnected' && (
+            <div className="mt-4 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg max-w-2xl mx-auto">
+              <p className="text-yellow-400 text-sm">
+                <strong>Note:</strong> Supabase is not connected. The multi-agent pipeline will still work, but results won't be logged to the database. 
+                See <code className="bg-black/20 px-1 rounded">SUPABASE_SETUP.md</code> for setup instructions.
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Input Section */}

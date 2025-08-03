@@ -1110,7 +1110,7 @@ export default function YCPrototype() {
         totalTasks: 12,
         completionRate: 67,
         notes: 'Made significant progress on business registration and kitchen setup. Need to focus on marketing strategy next week.',
-        status: 'completed'
+        status: 'in-progress'
       },
       {
         id: 2,
@@ -1120,7 +1120,7 @@ export default function YCPrototype() {
         totalTasks: 10,
         completionRate: 50,
         notes: 'Completed market research and finalized business plan. Behind schedule on supplier contacts.',
-        status: 'completed'
+        status: 'in-progress'
       },
       {
         id: 3,
@@ -1130,7 +1130,7 @@ export default function YCPrototype() {
         totalTasks: 8,
         completionRate: 75,
         notes: 'Excellent progress on recipe development and cost analysis. Ready to start vendor outreach.',
-        status: 'completed'
+        status: 'in-progress'
       },
       {
         id: 4,
@@ -1140,7 +1140,7 @@ export default function YCPrototype() {
         totalTasks: 6,
         completionRate: 50,
         notes: 'Started strong with business idea validation. Need to accelerate planning phase.',
-        status: 'completed'
+        status: 'in-progress'
       },
       {
         id: 5,
@@ -1150,7 +1150,7 @@ export default function YCPrototype() {
         totalTasks: 9,
         completionRate: 78,
         notes: 'Strong month with excellent progress on financial planning and supplier negotiations. Ready for next phase.',
-        status: 'completed'
+        status: 'in-progress'
       },
       {
         id: 6,
@@ -1160,7 +1160,7 @@ export default function YCPrototype() {
         totalTasks: 7,
         completionRate: 57,
         notes: 'Completed strategic framework and identified key growth opportunities. Need to finalize implementation timeline.',
-        status: 'completed'
+        status: 'in-progress'
       },
       {
         id: 7,
@@ -1170,7 +1170,7 @@ export default function YCPrototype() {
         totalTasks: 11,
         completionRate: 82,
         notes: 'Extensive market research completed. Identified target demographics and competitive advantages. Ready for business plan development.',
-        status: 'completed'
+        status: 'in-progress'
       },
       {
         id: 8,
@@ -1180,7 +1180,7 @@ export default function YCPrototype() {
         totalTasks: 5,
         completionRate: 40,
         notes: 'Basic setup completed. Need to accelerate on core business planning and financial projections.',
-        status: 'completed'
+        status: 'in-progress'
       }
     ]
 
@@ -1240,8 +1240,15 @@ export default function YCPrototype() {
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
                     <h3 className="text-lg font-bold glass-text-white">{audit.title}</h3>
-                    <Badge variant={audit.status === 'completed' ? 'default' : 'secondary'} className="bg-teal-500/30 text-teal-100 border-teal-400/50 font-semibold">
-                      {audit.status}
+                    <Badge 
+                      variant={audit.status === 'completed' ? 'default' : 'secondary'} 
+                      className={
+                        audit.status === 'completed' 
+                          ? 'bg-green-500/30 text-green-100 border-green-400/50 font-semibold'
+                          : 'bg-yellow-500/30 text-yellow-100 border-yellow-400/50 font-semibold'
+                      }
+                    >
+                      {audit.status === 'completed' ? 'Completed' : 'In Progress'}
                     </Badge>
                   </div>
                   <p className="text-sm glass-text-teal mb-3 font-medium">{new Date(audit.date).toLocaleDateString('en-US', { 
