@@ -884,6 +884,26 @@ export default function LandingPage() {
                   </div>
                 </Link>
               </motion.div>
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
+                viewport={{ once: true }}
+                className="feature-card"
+              >
+                <Link href="/mvp" className="feature-link">
+                  <div className="feature-icon">
+                    <Zap size={32} />
+                  </div>
+                  <h3>Multi-Agent MVP</h3>
+                  <p>Test the core 3-agent pipeline with retry logic, forking, and output selection</p>
+                  <div className="feature-tags">
+                    <span className="tag">MVP</span>
+                    <span className="tag">Pipeline</span>
+                    <span className="tag">Testing</span>
+                  </div>
+                </Link>
+              </motion.div>
             </div>
           </div>
         </div>
