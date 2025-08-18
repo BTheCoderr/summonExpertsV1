@@ -13,7 +13,9 @@ import {
   Loader2, 
   Play,
   RefreshCw,
-  Zap
+  Zap,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 interface TaskResult {
@@ -33,6 +35,7 @@ export default function MVPTaskRunner() {
   const [error, setError] = useState<string | null>(null);
   const [enableForking, setEnableForking] = useState(false);
   const [supabaseStatus, setSupabaseStatus] = useState<'checking' | 'connected' | 'disconnected'>('checking');
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
 
   // Check Supabase connection on component mount
   useEffect(() => {
@@ -84,13 +87,38 @@ export default function MVPTaskRunner() {
     setError(null);
   };
 
+  const toggleTheme = () => {
+    setIsDarkTheme(!isDarkTheme);
+    // Toggle body class for global theme
+    if (isDarkTheme) {
+      document.body.classList.remove('dark');
+      document.body.classList.add('light');
+    } else {
+      document.body.classList.remove('light');
+      document.body.classList.add('dark');
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <div className={`demo-page ${isDarkTheme ? 'dark' : 'light'} min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8 relative overflow-hidden`}>
+      {/* Animated background elements */}
+      <div className="glassmorphism-bg"></div>
+      
+      <div className="max-w-4xl mx-auto space-y-8 relative z-10">
         {/* Header */}
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Summon Experts - Multi-Agent Infrastructure</h1>
-          <p className="text-gray-300">Test the 3-agent pipeline: Researcher → Summarizer → Validator</p>
+          <div className="flex justify-end mb-4">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={toggleTheme}
+              className="glass-button"
+            >
+              {isDarkTheme ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </Button>
+          </div>
+          <h1 className="text-4xl font-bold glass-text-white mb-4">Summon Experts - Multi-Agent Infrastructure</h1>
+          <p className="glass-text-teal">Test the 3-agent pipeline: Researcher → Summarizer → Validator</p>
           
           {/* Supabase Status */}
           <div className="mt-4 flex justify-center">
@@ -271,12 +299,12 @@ export default function MVPTaskRunner() {
                     <Search className="w-4 h-4 text-blue-400" />
                     <span className="glass-text-white">Research</span>
                   </div>
-                  <div className="text-gray-400">→</div>
+                  <div className="glass-text-teal">→</div>
                   <div className="flex items-center gap-2">
                     <FileText className="w-4 h-4 text-green-400" />
                     <span className="glass-text-white">Summarize</span>
                   </div>
-                  <div className="text-gray-400">→</div>
+                  <div className="glass-text-teal">→</div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-purple-400" />
                     <span className="glass-text-white">Validate</span>

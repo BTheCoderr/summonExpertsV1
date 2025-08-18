@@ -145,7 +145,8 @@ export default function LandingPage() {
     { id: 'what-you-get', label: 'What You Get' },
     { id: 'why-different', label: 'Why Different' },
     { id: 'why-trust', label: 'Why Trust Us' },
-    { id: 'early-offer', label: 'Early Offer' }
+    { id: 'early-offer', label: 'Early Offer' },
+    { id: 'platform', label: 'Platform', href: '/platform' }
   ];
 
   return (
@@ -342,13 +343,23 @@ export default function LandingPage() {
           
           <div className="nav-links">
             {navItems.map((item) => (
-              <button
-                key={item.id}
-                className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
-                onClick={() => scrollToSection(item.id)}
-              >
-                {item.label}
-              </button>
+              item.href ? (
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  className="nav-link"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <button
+                  key={item.id}
+                  className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
+                  onClick={() => scrollToSection(item.id)}
+                >
+                  {item.label}
+                </button>
+              )
             ))}
           </div>
           
@@ -372,13 +383,24 @@ export default function LandingPage() {
             className="mobile-menu"
           >
             {navItems.map((item) => (
-              <button
-                key={item.id}
-                className="mobile-nav-link"
-                onClick={() => scrollToSection(item.id)}
-              >
-                {item.label}
-              </button>
+              item.href ? (
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  className="mobile-nav-link"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <button
+                  key={item.id}
+                  className="mobile-nav-link"
+                  onClick={() => scrollToSection(item.id)}
+                >
+                  {item.label}
+                </button>
+              )
             ))}
           </motion.div>
         )}

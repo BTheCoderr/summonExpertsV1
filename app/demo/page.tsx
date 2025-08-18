@@ -47,10 +47,13 @@ import {
   TrendingDown,
   DollarSign as DollarIcon,
   UserCheck,
-  Shield
+  Shield,
+  Sun,
+  Moon,
+  Building
 } from 'lucide-react'
 
-type TabType = 'overview' | 'roadmap' | 'weekly-tasks' | 'progress-audit'
+type TabType = 'overview' | 'roadmap' | 'weekly-tasks'
 
 interface AIModalProps {
   isOpen: boolean
@@ -416,6 +419,7 @@ export default function YCPrototype() {
   ])
   const [uploadedFiles, setUploadedFiles] = useState<string[]>([])
   const [auditDisplayCount, setAuditDisplayCount] = useState(4)
+  const [isDarkTheme, setIsDarkTheme] = useState(true)
   const [weeklyTasks, setWeeklyTasks] = useState([
     {
       id: 1,
@@ -632,81 +636,151 @@ export default function YCPrototype() {
     console.log('AI process completed')
   }
 
+  const toggleTheme = () => {
+    setIsDarkTheme(!isDarkTheme)
+    // Toggle body class for global theme
+    if (isDarkTheme) {
+      document.body.classList.remove('dark')
+      document.body.classList.add('light')
+    } else {
+      document.body.classList.remove('light')
+      document.body.classList.add('dark')
+    }
+  }
+
   const renderOverview = () => (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
-            <BookOpen className="w-6 h-6 text-white" />
+              <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
+              <BookOpen className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold glass-text-white">Business Highlights</h1>
+              <p className="glass-text-teal mt-1">Complete business profile and strategic foundation</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-3xl font-bold text-white">Business Overview</h1>
-            <p className="text-teal-200 mt-1">A snapshot of your business and all its key details.</p>
+          <div className="flex items-center space-x-3">
+            <Button variant="outline" size="sm" className="glass-button">
+              <Edit3 className="w-4 h-4 mr-2" />
+              Edit Project
+            </Button>
           </div>
         </div>
-        <div className="flex items-center space-x-3">
-          <Button variant="outline" size="sm" className="border-teal-400 text-teal-200 hover:bg-teal-500/20 backdrop-blur-sm">
-            <Edit3 className="w-4 h-4 mr-2" />
-            Edit Project
-          </Button>
+
+
+
+      {/* Main Layout - Three Sections */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Left Column */}
+        <div className="space-y-6">
+          {/* About Founder Section */}
+          <div className="glass-panel p-6">
+            <h2 className="text-xl font-bold glass-text-white mb-4 flex items-center gap-2">
+              <div className="w-6 h-6 bg-teal-500 rounded-lg flex items-center justify-center">
+                <Users className="w-4 h-4 text-white" />
+              </div>
+              About Founder
+            </h2>
+            <p className="glass-text-teal text-sm mb-4 underline">User profile</p>
+            <div className="space-y-3">
+              <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
+                <span className="font-semibold glass-text-teal">Full Name:</span>
+                <span className="glass-text-white">John Baker</span>
+              </div>
+              <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
+                <span className="font-semibold glass-text-teal">Email Address:</span>
+                <span className="glass-text-white">john@bakery.com</span>
+              </div>
+              <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
+                <span className="font-semibold glass-text-teal">Phone:</span>
+                <span className="glass-text-white">(401) 555-0123</span>
+              </div>
+              <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
+                <span className="font-semibold glass-text-teal">Industry Experience:</span>
+                <span className="glass-text-white text-right max-w-md">Professional history</span>
+              </div>
+              <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
+                <span className="font-semibold glass-text-teal">Expertise:</span>
+                <span className="glass-text-white text-right max-w-md">Skills, Certification & Knowledge</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Strategic Goals Section */}
+          <div className="glass-panel p-6">
+            <h2 className="text-xl font-bold glass-text-white mb-4 flex items-center gap-2">
+              <div className="w-6 h-6 bg-teal-500 rounded-lg flex items-center justify-center">
+                <Target className="w-4 h-4 text-white" />
+              </div>
+              Strategic Goals
+            </h2>
+            <p className="glass-text-teal text-sm mb-4 underline">5-year plan, 12-month plan, Now</p>
+            <div className="space-y-3">
+              <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
+                <span className="font-semibold glass-text-teal">Vision:</span>
+                <span className="glass-text-white text-right max-w-md">Where should you be in 5 years</span>
+              </div>
+              <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
+                <span className="font-semibold glass-text-teal">Current Stage:</span>
+                <span className="glass-text-white text-right max-w-md">At start</span>
+              </div>
+              <div className="ml-6 space-y-2">
+                <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                  <span className="font-medium glass-text-teal">Customers per month:</span>
+                  <span className="glass-text-white">0</span>
+                </div>
+                <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                  <span className="font-medium glass-text-teal">Revenue per month:</span>
+                  <span className="glass-text-white">$0</span>
+                </div>
+                <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                  <span className="font-medium glass-text-teal">Employees/team size:</span>
+                  <span className="glass-text-white">1</span>
+                </div>
+              </div>
+              <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
+                <span className="font-semibold glass-text-teal">Aspirational Goals:</span>
+                <span className="glass-text-white text-right max-w-md">Where should current goals be in 12 months</span>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
 
-
-
-      {/* Business Highlights */}
-      <div className="glass-panel p-6">
-        <h2 className="text-xl font-bold glass-text-white mb-4 flex items-center gap-2">
-          <div className="w-6 h-6 bg-teal-500 rounded-lg flex items-center justify-center">
-            <Target className="w-4 h-4 text-white" />
-          </div>
-          Highlights
-        </h2>
-        <div className="space-y-4">
-          <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
-            <span className="font-semibold glass-text-teal">Business Idea:</span>
-            <span className="glass-text-white text-right max-w-md">I want to start a bakery specializing in fresh, locally sourced bread and pastries.</span>
-          </div>
-          <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
-            <span className="font-semibold glass-text-teal">Operating Location:</span>
-            <span className="glass-text-white">Providence, RI</span>
-          </div>
-          <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
-            <span className="font-semibold glass-text-teal">Vision:</span>
-            <span className="glass-text-white text-right max-w-md">To create a cozy neighborhood bakery that delivers affordable, fresh baked goods daily and becomes a staple in the Providence community.</span>
-          </div>
-          <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
-            <span className="font-semibold glass-text-teal">Current Stage:</span>
-            <span className="glass-text-white">All I have for now is an idea.</span>
-          </div>
-          <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
-            <span className="font-semibold glass-text-teal">Immediate Business Goal:</span>
-            <span className="glass-text-white">Launch and start selling within 2 months</span>
-          </div>
-          <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
-            <span className="font-semibold glass-text-teal">End Date:</span>
-            <span className="glass-text-white">2025-09-13</span>
-          </div>
-          <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
-            <span className="font-semibold glass-text-teal">Execution Approach:</span>
-            <span className="glass-text-white">Pilot Program</span>
-          </div>
-          <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
-            <span className="font-semibold glass-text-teal">Review Cadence:</span>
-            <span className="glass-text-white">Monthly</span>
-          </div>
-          <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
-            <span className="font-semibold glass-text-teal">Available Time per Week:</span>
-            <span className="glass-text-white">15 hours</span>
-          </div>
-          <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
-            <span className="font-semibold glass-text-teal">Relevant Experience:</span>
-            <span className="glass-text-white">Experienced baker, new to business operations</span>
-          </div>
-          <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
-            <span className="font-semibold glass-text-teal">Other Comments:</span>
-            <span className="glass-text-white text-right max-w-md">I want something small I can scale gradually. I'm considering starting by selling at farmers' markets or online.</span>
+        {/* Right Column */}
+        <div className="space-y-6">
+          {/* About Business Section */}
+          <div className="glass-panel p-6">
+            <h2 className="text-xl font-bold glass-text-white mb-4 flex items-center gap-2">
+              <div className="w-6 h-6 bg-teal-500 rounded-lg flex items-center justify-center">
+                <Building className="w-4 h-4 text-white" />
+              </div>
+              About Business
+            </h2>
+            <p className="glass-text-teal text-sm mb-4 underline">Business basics</p>
+            <div className="space-y-3">
+              <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
+                <span className="font-semibold glass-text-teal">Business Name:</span>
+                <span className="glass-text-white">Providence Artisan Bakery</span>
+              </div>
+              <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
+                <span className="font-semibold glass-text-teal">Start Month/Year:</span>
+                <span className="glass-text-white">September 2025</span>
+              </div>
+              <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
+                <span className="font-semibold glass-text-teal">Location:</span>
+                <span className="glass-text-white">Providence, RI, USA</span>
+              </div>
+              <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
+                <span className="font-semibold glass-text-teal">Business Description:</span>
+                <span className="glass-text-white text-right max-w-md">What do you do?</span>
+              </div>
+              <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
+                <span className="font-semibold glass-text-teal">Service Offerings:</span>
+                <span className="glass-text-white text-right max-w-md">What are you offering customers now?</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -858,7 +932,7 @@ export default function YCPrototype() {
           <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
             <Map className="w-6 h-6 text-white" />
           </div>
-          <h1 className="text-3xl font-bold glass-text-white">Business Roadmap</h1>
+          <h1 className="text-3xl font-bold glass-text-white">Strategic Plan</h1>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="outline" className="glass-button flex items-center gap-2" onClick={generateStrategicPlan}>
@@ -873,81 +947,191 @@ export default function YCPrototype() {
             <Rocket className="w-4 h-4" />
             Deploy
           </Button>
-          <Button variant="ghost" size="sm" className="text-white hover:bg-white/10">
-            <MoreVertical className="w-4 h-4" />
-          </Button>
         </div>
       </div>
       
-      <p className="glass-text-teal text-lg font-medium">Your execution plan: see how each initiative and key result leads you forward.</p>
+      <p className="glass-text-teal text-lg font-medium">This will have a duration of 3 months for every user.</p>
 
-      <div className="glass-panel p-6">
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold glass-text-white mb-2 flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-lg flex items-center justify-center">
-              <BarChart3 className="w-4 h-4 text-white" />
+      {/* 5-Section Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Left Column */}
+        <div className="space-y-6">
+          {/* Growth Plan Form (Top-Left) */}
+          <div className="glass-panel p-6">
+            <h2 className="text-xl font-bold glass-text-white mb-4 flex items-center gap-2">
+              <div className="w-6 h-6 bg-teal-500 rounded-lg flex items-center justify-center">
+                <BarChart3 className="w-4 h-4 text-white" />
+              </div>
+              Growth Plan (Form)
+            </h2>
+            <p className="glass-text-teal text-sm mb-4">Summary (last growth plan + audit log)</p>
+            <div className="space-y-3">
+              <div className="space-y-2">
+                <label className="block text-sm font-medium glass-text-teal">User Input:</label>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                    <span className="font-medium glass-text-teal">Current stage (last qtr. no.):</span>
+                    <input type="text" className="glass-input px-2 py-1 text-sm w-20" placeholder="0" />
+                  </div>
+                  <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                    <span className="font-medium glass-text-teal">Aspirational goals (next qtr. no):</span>
+                    <input type="text" className="glass-input px-2 py-1 text-sm w-20" placeholder="100" />
+                  </div>
+                  <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                    <span className="font-medium glass-text-teal">Any other Business Priorities:</span>
+                    <input type="text" className="glass-input px-2 py-1 text-sm w-32" placeholder="..." />
+                  </div>
+                  <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                    <span className="font-medium glass-text-teal">Ongoing challenges (if any):</span>
+                    <input type="text" className="glass-input px-2 py-1 text-sm w-32" placeholder="..." />
+                  </div>
+                  <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                    <span className="font-medium glass-text-teal">Availability (hours per week):</span>
+                    <input type="text" className="glass-input px-2 py-1 text-sm w-20" placeholder="15" />
+                  </div>
+                </div>
+              </div>
             </div>
-            Strategic Plan Highlights
-          </h2>
-        </div>
-        <div>
-          <p className="glass-text-white mb-6 font-medium">
-            This finalized strategic plan provides a robust approach to ensure the bakery efficiently launches and secures its first sales within the two-month goal. By quickly engaging with the market through pop-up events and social media strategies, alongside setting up efficient operations and a responsive feedback mechanism, the bakery is strategically positioned for growth and becoming a cherished fixture in the Providence neighborhood.
-          </p>
-          
-          <div>
-            <h4 className="font-semibold glass-text-white mb-3">Prioritization:</h4>
-            <ol className="list-decimal list-inside space-y-2 glass-text-white font-medium">
-              <li><strong>Secure Baking Location:</strong> Foundational need for production.</li>
-              <li><strong>Develop Interim Order and Sales Channels:</strong> Immediate sales generation to hit quick wins.</li>
-              <li><strong>Obtain Registrations and Permits:</strong> Essential for legal compliance and full operation.</li>
-              <li><strong>Online and Social Presence:</strong> Establish digital foothold for customer acquisition.</li>
-              <li><strong>Feedback and Monitoring:</strong> Continuously adapt and improve the strategy based on customer insights.</li>
-            </ol>
+          </div>
+
+          {/* Growth Plan Read-only (Bottom-Left) */}
+          <div className="glass-panel p-6">
+            <h2 className="text-xl font-bold glass-text-white mb-4 flex items-center gap-2">
+              <div className="w-6 h-6 bg-purple-500 rounded-lg flex items-center justify-center">
+                <BarChart3 className="w-4 h-4 text-white" />
+              </div>
+              Growth Plan (Read-only)
+            </h2>
+            <div className="space-y-3">
+              <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                <span className="font-medium glass-text-teal">Priorities + goals + challenges:</span>
+                <span className="glass-text-white text-right max-w-md">Objectives & Key Results (OKRs)</span>
+              </div>
+              <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                <span className="font-medium glass-text-teal">Availability (hours per week):</span>
+                <span className="glass-text-white">15</span>
+              </div>
+              <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                <span className="font-medium glass-text-teal">Start date:</span>
+                <span className="glass-text-white">Now</span>
+              </div>
+              <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                <span className="font-medium glass-text-teal">End date:</span>
+                <span className="glass-text-white">90 days from now</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="glass-panel p-6">
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold glass-text-white mb-2 flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-lg flex items-center justify-center">
-              <Map className="w-4 h-4 text-white" />
+        {/* Right Column */}
+        <div className="space-y-6">
+          {/* Project Roadmap (Top-Right) */}
+          <div className="glass-panel p-6">
+            <h2 className="text-xl font-bold glass-text-white mb-4 flex items-center gap-2">
+              <div className="w-6 h-6 bg-purple-500 rounded-lg flex items-center justify-center">
+                <Map className="w-4 h-4 text-white" />
+              </div>
+              <div className="w-6 h-6 bg-green-500 rounded-lg flex items-center justify-center">
+                <Map className="w-4 h-4 text-white" />
+              </div>
+              Project Roadmap (Read-only)
+            </h2>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden">
+                <thead>
+                  <tr className="bg-white/20">
+                    <th className="border border-white/20 px-3 py-2 text-left font-semibold glass-text-white text-sm">Initiatives</th>
+                    <th className="border border-white/20 px-3 py-2 text-left font-semibold glass-text-white text-sm">Completion (%)</th>
+                    <th className="border border-white/20 px-3 py-2 text-left font-semibold glass-text-white text-sm">Timeline</th>
+                    <th className="border border-white/20 px-3 py-2 text-left font-semibold glass-text-white text-sm">Dependencies</th>
+                    <th className="border border-white/20 px-3 py-2 text-left font-semibold glass-text-white text-sm">Metrics (from KR)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="hover:bg-white/10 transition-colors">
+                    <td className="border border-white/20 px-3 py-2 glass-text-white text-sm">Secure Location</td>
+                    <td className="border border-white/20 px-3 py-2 glass-text-white text-sm">25%</td>
+                    <td className="border border-white/20 px-3 py-2 glass-text-white text-sm">Week 1-2</td>
+                    <td className="border border-white/20 px-3 py-2 glass-text-white text-sm">None</td>
+                    <td className="border border-white/20 px-3 py-2 glass-text-white text-sm">Location secured</td>
+                  </tr>
+                  <tr className="hover:bg-white/10 transition-colors">
+                    <td className="border border-white/20 px-3 py-2 glass-text-white text-sm">Get Permits</td>
+                    <td className="border border-white/20 px-3 py-2 glass-text-white text-sm">0%</td>
+                    <td className="border border-white/20 px-3 py-2 glass-text-white text-sm">Week 2-3</td>
+                    <td className="border border-white/20 px-3 py-2 glass-text-white text-sm">Location</td>
+                    <td className="border border-white/20 px-3 py-2 glass-text-white text-sm">Permits obtained</td>
+                  </tr>
+                  <tr className="hover:bg-white/10 transition-colors">
+                    <td className="border border-white/20 px-3 py-2 glass-text-white text-sm">Launch Marketing</td>
+                    <td className="border border-white/20 px-3 py-2 glass-text-white text-sm">0%</td>
+                    <td className="border border-white/20 px-3 py-2 glass-text-white text-sm">Week 3-4</td>
+                    <td className="border border-white/20 px-3 py-2 glass-text-white text-sm">Permits</td>
+                    <td className="border border-white/20 px-3 py-2 glass-text-white text-sm">Social presence</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            Business Roadmap
-          </h2>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden">
-            <thead>
-              <tr className="bg-white/20">
-                <th className="border border-white/20 px-4 py-3 text-left font-semibold glass-text-white">Milestone</th>
-                <th className="border border-white/20 px-4 py-3 text-left font-semibold glass-text-white">Objective</th>
-                <th className="border border-white/20 px-4 py-3 text-left font-semibold glass-text-white">Deadline</th>
-                <th className="border border-white/20 px-4 py-3 text-left font-semibold glass-text-white">Key Results</th>
-                <th className="border border-white/20 px-4 py-3 text-left font-semibold glass-text-white">Status</th>
-                <th className="border border-white/20 px-4 py-3 text-left font-semibold glass-text-white">Progress</th>
-              </tr>
-            </thead>
-            <tbody>
-              {strategicHurdles.map((milestone, index) => (
-                <tr key={index} className="hover:bg-white/10 transition-colors">
-                  <td className="border border-white/20 px-4 py-3 font-bold glass-text-white">{milestone.title}</td>
-                  <td className="border border-white/20 px-4 py-3 glass-text-white font-medium">{milestone.description}</td>
-                  <td className="border border-white/20 px-4 py-3 glass-text-white font-medium">{milestone.status}</td>
-                  <td className="border border-white/20 px-4 py-3 glass-text-white">
-                    <ul className="list-disc list-inside space-y-1">
-                      {/* No key results for hurdles, but could be added if needed */}
-                    </ul>
-                  </td>
-                  <td className="border border-white/20 px-4 py-3">
-                    <Badge variant="outline" className="bg-teal-500/30 text-teal-100 border-teal-400/50 font-semibold">{milestone.priority}</Badge>
-                  </td>
-                  <td className="border border-white/20 px-4 py-3 glass-text-white font-medium">{milestone.status}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          </div>
+
+          {/* Plan of Action (Middle-Right) */}
+          <div className="glass-panel p-6">
+            <h2 className="text-xl font-bold glass-text-white mb-4 flex items-center gap-2">
+              <div className="w-6 h-6 bg-purple-500 rounded-lg flex items-center justify-center">
+                <Target className="w-4 h-4 text-white" />
+              </div>
+              <div className="w-6 h-6 bg-green-500 rounded-lg flex items-center justify-center">
+                <Target className="w-4 h-4 text-white" />
+              </div>
+              Plan of Action (Read-only)
+            </h2>
+            <div className="space-y-3">
+              <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                <span className="font-medium glass-text-teal">Action plan:</span>
+                <span className="glass-text-white text-right max-w-md">List of initiatives/activities</span>
+              </div>
+              <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                <span className="font-medium glass-text-teal">Line of action:</span>
+                <span className="glass-text-white text-right max-w-md">Prioritization path/sequence</span>
+              </div>
+              <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                <span className="font-medium glass-text-teal">Dependencies/Risk areas:</span>
+                <span className="glass-text-white text-right max-w-md">Mitigation strategies</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Market Insight (Bottom-Right) */}
+          <div className="glass-panel p-6">
+            <h2 className="text-xl font-bold glass-text-white mb-4 flex items-center gap-2">
+              <div className="w-6 h-6 bg-purple-500 rounded-lg flex items-center justify-center">
+                <TrendingUp className="w-4 h-4 text-white" />
+              </div>
+              Market Insight
+            </h2>
+            <div className="space-y-3">
+              <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                <span className="font-medium glass-text-teal">Industry & Market data:</span>
+                <span className="glass-text-white text-right max-w-md">Specific to State</span>
+              </div>
+              <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                <span className="font-medium glass-text-teal">Market Trends:</span>
+                <span className="glass-text-white text-right max-w-md">Specific to country</span>
+              </div>
+              <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                <span className="font-medium glass-text-teal">Growth Opportunities:</span>
+                <span className="glass-text-white text-right max-w-md">Specific to county & State</span>
+              </div>
+              <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                <span className="font-medium glass-text-teal">Competitor action:</span>
+                <span className="glass-text-white text-right max-w-md">Specific to county & state</span>
+              </div>
+              <div className="flex justify-between items-start p-2 bg-white/5 rounded-lg">
+                <span className="font-medium glass-text-teal">User Involvement:</span>
+                <span className="glass-text-white text-right max-w-md">Market Segmentation (identify 1 preferred customer group)</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -960,7 +1144,7 @@ export default function YCPrototype() {
           <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
             <Calendar className="w-6 h-6 text-white" />
           </div>
-          <h1 className="text-3xl font-bold glass-text-white">Weekly Tasks</h1>
+          <h1 className="text-3xl font-bold glass-text-white">Weekly Priorities</h1>
         </div>
         <Button variant="outline" className="glass-button flex items-center gap-2" onClick={generateTasks}>
           <Sparkles className="w-4 h-4" />
@@ -968,329 +1152,169 @@ export default function YCPrototype() {
         </Button>
       </div>
       
-      <p className="glass-text-teal text-lg">Here's what you should prioritize this week to make tangible progress.</p>
+      <p className="glass-text-teal text-lg">This is done every week (or 7 days)</p>
 
-      {/* Weekly Task List */}
-      <div className="glass-panel p-6">
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold glass-text-white mb-2">Weekly Task Plan</h2>
-          <p className="glass-text-teal">15 hours available this week</p>
-        </div>
-        <div className="space-y-4">
-          {weeklyTasks.map((task, index) => (
-            <div key={task.id} className={`p-6 rounded-xl border backdrop-blur-sm ${
-              task.completed 
-                ? 'bg-green-500/20 border-green-400/30' 
-                : 'bg-white/10 border-white/20 hover:bg-white/15 transition-all duration-200'
-            }`}>
-              <div className="flex items-start gap-4">
-                <div className="flex items-center justify-center w-6 h-6 mt-1">
-                                      <input
-                      type="checkbox"
-                      checked={task.completed}
-                      onChange={() => toggleTask(task.id)}
-                      className="w-5 h-5 text-teal-500 bg-white border-2 border-teal-400 rounded focus:ring-teal-400 focus:ring-2 checked:bg-teal-500 checked:border-teal-500"
-                    />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className={`text-lg font-bold ${task.completed ? 'line-through text-green-200' : 'glass-text-white'}`}>
-                      {index + 1}. {task.text}
-                    </h3>
-                    <div className="flex items-center gap-2">
-                      <Badge 
-                        variant={task.priority === 'High' ? 'destructive' : 'outline'}
-                        className={`flex items-center gap-1 font-semibold ${
-                          task.priority === 'High' 
-                            ? 'bg-red-500/30 text-red-100 border-red-400/50' 
-                            : 'bg-teal-500/30 text-teal-100 border-teal-400/50'
-                        }`}
-                      >
-                        {task.priority === 'High' ? '!! High' : 'Medium'}
-                        {task.priority === 'High' ? <AlertTriangle className="w-3 h-3" /> : <CheckCircle className="w-3 h-3" />}
-                      </Badge>
-                      <Badge variant="outline" className="flex items-center gap-1 font-semibold bg-white/20 text-teal-100 border-white/30">
-                        <Clock className="w-3 h-3" />
-                        {task.duration}
-                      </Badge>
-                    </div>
-                  </div>
-                  
-                  {/* Subtasks */}
-                  <div className="ml-2 space-y-3">
-                    <h4 className="text-sm font-medium glass-text-teal mb-3 flex items-center gap-2">
-                      <div className="w-2 h-2 bg-teal-400 rounded-full"></div>
-                      How to Execute:
-                    </h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {task.subtasks.map((subtask) => (
-                        <div key={subtask.id} className="flex items-center gap-3 p-3 bg-white/5 rounded-lg border border-white/10">
-                          <input
-                            type="checkbox"
-                            checked={subtask.completed}
-                            onChange={() => toggleSubtask(task.id, subtask.id)}
-                            className="w-4 h-4 text-teal-400 bg-white border-2 border-teal-400 rounded focus:ring-teal-400 focus:ring-1 checked:bg-teal-500 checked:border-teal-500"
-                          />
-                                              <span className={`text-sm font-medium ${subtask.completed ? 'line-through text-green-200' : 'glass-text-white'}`}>
-                      {subtask.text}
-                    </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Weekly Audit Section */}
-      <div className="glass-panel p-6">
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold glass-text-white mb-2 flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-lg flex items-center justify-center">
-              <Edit3 className="w-4 h-4 text-white" />
-            </div>
-            Weekly Audit
-          </h2>
-        </div>
+      {/* Two-Column Layout: MITs and Progress Audit */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Left Column - MITs */}
         <div className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium glass-text-teal mb-3 flex items-center gap-2">
-              <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
-                <X className="w-3 h-3 text-white" />
+          <div className="glass-panel p-6">
+            <h2 className="text-xl font-bold glass-text-white mb-4 flex items-center gap-2">
+              <div className="w-6 h-6 bg-teal-500 rounded-lg flex items-center justify-center">
+                <Target className="w-4 h-4 text-white" />
               </div>
-              What blocked your progress?
-            </label>
-            <textarea
-              value={''} // No audit data state, so placeholder
-              onChange={(e) => {}}
-              placeholder="Describe any obstacles or challenges you faced this week..."
-              className="glass-input w-full px-4 py-3 rounded-xl resize-none"
-              rows={3}
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium glass-text-teal mb-3 flex items-center gap-2">
-              <div className="w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center">
-                <Lightbulb className="w-3 h-3 text-white" />
+              MITs - Most Important Tasks
+            </h2>
+            <div className="space-y-4">
+              <div className="space-y-3">
+                <h3 className="font-semibold glass-text-white">List of Tasks:</h3>
+                <div className="ml-4 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm glass-text-teal">• How to execute (guidelines/recommendations)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm glass-text-teal">• Status marker: done?</span>
+                  </div>
+                </div>
               </div>
-              What did you learn this week?
-            </label>
-            <textarea
-              value={''} // No audit data state, so placeholder
-              onChange={(e) => {}}
-              placeholder="Share key insights, lessons learned, or new knowledge gained..."
-              className="glass-input w-full px-4 py-3 rounded-xl resize-none"
-              rows={3}
-            />
+              
+              {/* Task List with Execution Guidelines */}
+              <div className="space-y-4">
+                {weeklyTasks.map((task, index) => (
+                  <div key={task.id} className={`p-4 rounded-xl border backdrop-blur-sm ${
+                    task.completed 
+                      ? 'bg-green-500/20 border-green-400/30' 
+                      : 'bg-white/10 border-white/20 hover:bg-white/15 transition-all duration-200'
+                  }`}>
+                    <div className="flex items-start gap-3">
+                      <input
+                        type="checkbox"
+                        checked={task.completed}
+                        onChange={() => toggleTask(task.id)}
+                        className="w-4 h-4 text-teal-500 bg-white border-2 border-teal-400 rounded focus:ring-teal-400 focus:ring-2 checked:bg-teal-500 checked:border-teal-500 mt-1"
+                      />
+                      <div className="flex-1">
+                        <h4 className={`font-semibold ${task.completed ? 'line-through text-green-200' : 'glass-text-white'}`}>
+                          {index + 1}. {task.text}
+                        </h4>
+                        
+                        {/* How to Execute */}
+                        <div className="mt-3">
+                          <h5 className="text-sm font-medium glass-text-teal mb-2">How to execute:</h5>
+                          <div className="space-y-2">
+                            {task.subtasks.map((subtask) => (
+                              <div key={subtask.id} className="flex items-center gap-2 ml-4">
+                                <input
+                                  type="checkbox"
+                                  checked={subtask.completed}
+                                  onChange={() => toggleSubtask(task.id, subtask.id)}
+                                  className="w-3 h-3 text-teal-400 bg-white border border-teal-400 rounded focus:ring-teal-400 focus:ring-1 checked:bg-teal-500 checked:border-teal-500"
+                                />
+                                <span className={`text-sm ${subtask.completed ? 'line-through text-green-200' : 'glass-text-white'}`}>
+                                  {subtask.text}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        
+                        {/* Status and Priority */}
+                        <div className="flex items-center gap-2 mt-3">
+                          <Badge 
+                            variant={task.priority === 'High' ? 'destructive' : 'outline'}
+                            className={`text-xs ${
+                              task.priority === 'High' 
+                                ? 'bg-red-500/30 text-red-100 border-red-400/50' 
+                                : 'bg-teal-500/30 text-teal-100 border-teal-400/50'
+                            }`}
+                          >
+                            {task.priority === 'High' ? 'High Priority' : 'Medium Priority'}
+                          </Badge>
+                          <Badge variant="outline" className="text-xs bg-white/20 text-teal-100 border-white/30">
+                            <Clock className="w-3 h-3 mr-1" />
+                            {task.duration}
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          
-          <Button 
-            onClick={handleAuditSubmit}
-            className="glass-button w-full font-semibold py-4 rounded-xl"
-          >
-            Submit Audit
-          </Button>
+        </div>
+
+        {/* Right Column - Progress Audit */}
+        <div className="space-y-6">
+          <div className="glass-panel p-6">
+            <h2 className="text-xl font-bold glass-text-white mb-4 flex items-center gap-2">
+              <div className="w-6 h-6 bg-teal-500 rounded-lg flex items-center justify-center">
+                <Edit3 className="w-4 h-4 text-white" />
+              </div>
+              Progress Audit
+            </h2>
+            <div className="space-y-4">
+              {/* All Tasks Status */}
+              <div className="space-y-3">
+                <h3 className="font-semibold glass-text-white">All tasks:</h3>
+                <div className="ml-4 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm glass-text-teal">• Status Markers: completed/uncompleted</span>
+                  </div>
+                </div>
+                
+                {/* Task Completion Summary */}
+                <div className="mt-4 p-3 bg-white/5 rounded-lg">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm glass-text-teal">Overall Progress:</span>
+                    <span className="text-sm glass-text-white font-medium">
+                      {weeklyTasks.filter(t => t.completed).length} of {weeklyTasks.length} completed
+                    </span>
+                  </div>
+                  <div className="w-full bg-white/10 rounded-full h-2">
+                    <div 
+                      className="bg-gradient-to-r from-teal-500 to-emerald-500 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${(weeklyTasks.filter(t => t.completed).length / weeklyTasks.length) * 100}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              {/* Blockers/Challenges */}
+              <div className="space-y-3">
+                <h3 className="font-semibold glass-text-white">Blockers/challenges (if any):</h3>
+                <textarea
+                  placeholder="Describe any obstacles or challenges you faced this week..."
+                  className="glass-input w-full px-3 py-2 rounded-lg resize-none text-sm"
+                  rows={3}
+                />
+              </div>
+              
+              {/* Lessons Learned */}
+              <div className="space-y-3">
+                <h3 className="font-semibold glass-text-white">Lesson learned (if any):</h3>
+                <textarea
+                  placeholder="Share key insights, lessons learned, or new knowledge gained..."
+                  className="glass-input w-full px-3 py-2 rounded-lg resize-none text-sm"
+                  rows={3}
+                />
+              </div>
+              
+              {/* Submit Button */}
+              <Button 
+                onClick={handleAuditSubmit}
+                className="glass-button w-full font-semibold py-3 rounded-lg"
+              >
+                Submit Audit
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   )
 
-  const renderProgressAudit = () => {
-    // Mock audit data with realistic dates from July 2025 and earlier
-    const mockAudits = [
-      {
-        id: 1,
-        date: '2025-07-28',
-        title: 'Weekly Progress Review',
-        tasksCompleted: 8,
-        totalTasks: 12,
-        completionRate: 67,
-        notes: 'Made significant progress on business registration and kitchen setup. Need to focus on marketing strategy next week.',
-        status: 'in-progress'
-      },
-      {
-        id: 2,
-        date: '2025-07-21',
-        title: 'Mid-Month Assessment',
-        tasksCompleted: 5,
-        totalTasks: 10,
-        completionRate: 50,
-        notes: 'Completed market research and finalized business plan. Behind schedule on supplier contacts.',
-        status: 'in-progress'
-      },
-      {
-        id: 3,
-        date: '2025-07-14',
-        title: 'Week 2 Progress Check',
-        tasksCompleted: 6,
-        totalTasks: 8,
-        completionRate: 75,
-        notes: 'Excellent progress on recipe development and cost analysis. Ready to start vendor outreach.',
-        status: 'in-progress'
-      },
-      {
-        id: 4,
-        date: '2025-07-07',
-        title: 'Launch Week Review',
-        tasksCompleted: 3,
-        totalTasks: 6,
-        completionRate: 50,
-        notes: 'Started strong with business idea validation. Need to accelerate planning phase.',
-        status: 'in-progress'
-      },
-      {
-        id: 5,
-        date: '2025-06-30',
-        title: 'Month-End Review',
-        tasksCompleted: 7,
-        totalTasks: 9,
-        completionRate: 78,
-        notes: 'Strong month with excellent progress on financial planning and supplier negotiations. Ready for next phase.',
-        status: 'in-progress'
-      },
-      {
-        id: 6,
-        date: '2025-06-23',
-        title: 'Strategic Planning Session',
-        tasksCompleted: 4,
-        totalTasks: 7,
-        completionRate: 57,
-        notes: 'Completed strategic framework and identified key growth opportunities. Need to finalize implementation timeline.',
-        status: 'in-progress'
-      },
-      {
-        id: 7,
-        date: '2025-06-16',
-        title: 'Market Research Completion',
-        tasksCompleted: 9,
-        totalTasks: 11,
-        completionRate: 82,
-        notes: 'Extensive market research completed. Identified target demographics and competitive advantages. Ready for business plan development.',
-        status: 'in-progress'
-      },
-      {
-        id: 8,
-        date: '2025-06-09',
-        title: 'Initial Setup Phase',
-        tasksCompleted: 2,
-        totalTasks: 5,
-        completionRate: 40,
-        notes: 'Basic setup completed. Need to accelerate on core business planning and financial projections.',
-        status: 'in-progress'
-      }
-    ]
 
-    const totalAudits = mockAudits.length
-    const averageCompletion = Math.round(mockAudits.reduce((sum, audit) => sum + audit.completionRate, 0) / totalAudits)
-    const totalTasksCompleted = mockAudits.reduce((sum, audit) => sum + audit.tasksCompleted, 0)
-    const totalTasks = mockAudits.reduce((sum, audit) => sum + audit.totalTasks, 0)
-
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
-            <BarChart3 className="w-6 h-6 text-white" />
-          </div>
-          <h1 className="text-3xl font-bold glass-text-white">Progress Audit Logs</h1>
-        </div>
-        
-        <p className="glass-text-teal text-lg font-medium">Review your progress and reflections to track momentum.</p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="glass-panel p-6">
-            <div className="mb-4">
-              <h2 className="text-xl font-bold glass-text-white mb-2 flex items-center gap-2">
-                <div className="w-6 h-6 bg-teal-500 rounded-lg flex items-center justify-center">
-                  <BarChart3 className="w-4 h-4 text-white" />
-                </div>
-                Audit Summary
-              </h2>
-            </div>
-            <ul className="space-y-2 glass-text-white font-medium">
-              <li>• Total Audits: {totalAudits}</li>
-              <li>• Average Completion Rate: {averageCompletion}%</li>
-            </ul>
-          </div>
-
-          <div className="glass-panel p-6">
-            <div className="mb-4">
-              <h2 className="text-xl font-bold glass-text-white mb-2 flex items-center gap-2">
-                <div className="w-6 h-6 bg-teal-500 rounded-lg flex items-center justify-center">
-                  <CheckCircle className="w-4 h-4 text-white" />
-                </div>
-                Task Completion
-              </h2>
-            </div>
-            <ul className="space-y-2 glass-text-white font-medium">
-              <li>• Tasks Completed: {totalTasksCompleted} of {totalTasks}</li>
-              <li>• Overall Completion Rate: {Math.round((totalTasksCompleted / totalTasks) * 100)}%</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold glass-text-white">Recent Audit Records</h2>
-          {mockAudits.slice(0, auditDisplayCount).map((audit) => (
-            <div key={audit.id} className="glass-panel p-6 hover:bg-white/15 transition-all duration-200">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-lg font-bold glass-text-white">{audit.title}</h3>
-                    <Badge 
-                      variant={audit.status === 'completed' ? 'default' : 'secondary'} 
-                      className={
-                        audit.status === 'completed' 
-                          ? 'bg-green-500/30 text-green-100 border-green-400/50 font-semibold'
-                          : 'bg-yellow-500/30 text-yellow-100 border-yellow-400/50 font-semibold'
-                      }
-                    >
-                      {audit.status === 'completed' ? 'Completed' : 'In Progress'}
-                    </Badge>
-                  </div>
-                  <p className="text-sm glass-text-teal mb-3 font-medium">{new Date(audit.date).toLocaleDateString('en-US', { 
-                    weekday: 'long', 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
-                  })}</p>
-                  <div className="flex items-center gap-4 mb-3">
-                    <span className="text-sm glass-text-teal font-medium">
-                      Tasks: {audit.tasksCompleted}/{audit.totalTasks}
-                    </span>
-                    <span className="text-sm glass-text-teal font-medium">
-                      Completion: {audit.completionRate}%
-                    </span>
-                  </div>
-                  <p className="glass-text-white font-medium">{audit.notes}</p>
-                </div>
-                <div className="ml-4">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 flex items-center justify-center shadow-lg">
-                    <span className="text-white font-bold text-sm">{audit.completionRate}%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-          
-          {/* Load More Button */}
-          {auditDisplayCount < mockAudits.length && (
-            <div className="text-center pt-4">
-              <Button 
-                onClick={() => setAuditDisplayCount(prev => Math.min(prev + 2, mockAudits.length))}
-                className="glass-button"
-              >
-                Load More Records
-              </Button>
-            </div>
-          )}
-        </div>
-      </div>
-    )
-  }
 
   const renderContent = () => {
     switch (activeTab) {
@@ -1300,15 +1324,13 @@ export default function YCPrototype() {
         return renderRoadmap()
       case 'weekly-tasks':
         return renderWeeklyTasks()
-      case 'progress-audit':
-        return renderProgressAudit()
       default:
         return renderOverview()
     }
   }
 
   return (
-    <div className="demo-page min-h-screen relative overflow-hidden">
+    <div className={`demo-page ${isDarkTheme ? 'dark' : 'light'} min-h-screen relative overflow-hidden`}>
       {/* Animated background elements */}
       <div className="glassmorphism-bg"></div>
       
@@ -1322,8 +1344,8 @@ export default function YCPrototype() {
                 <span className="text-white font-bold text-lg">SE</span>
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white">Summon Experts</h1>
-                <p className="text-teal-200 text-sm">AI-Powered Business Planning</p>
+                <h1 className="text-xl font-bold glass-text-white">Summon Experts</h1>
+                <p className="glass-text-teal text-sm">AI-Powered Business Planning</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -1331,10 +1353,18 @@ export default function YCPrototype() {
                 variant="outline" 
                 size="sm" 
                 onClick={() => setIsAIModalOpen(true)} 
-                className="border-teal-400 text-teal-200 hover:bg-teal-500/20 backdrop-blur-sm"
+                className="glass-button"
               >
                 <Rocket className="w-4 h-4 mr-2" />
                 Deploy
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={toggleTheme}
+                className="glass-button"
+              >
+                {isDarkTheme ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
               </Button>
               <Button variant="ghost" size="sm" className="text-white hover:bg-white/10">
                 <MoreVertical className="w-4 h-4" />
@@ -1348,10 +1378,9 @@ export default function YCPrototype() {
           <div className="flex justify-center">
             <div className="flex space-x-1 bg-white/10 rounded-xl p-1 backdrop-blur-sm">
               {[
-                { id: 'overview', label: 'Overview', icon: BookOpen },
-                { id: 'roadmap', label: 'Roadmap', icon: Map },
-                { id: 'weekly-tasks', label: 'Weekly Tasks', icon: Calendar },
-                { id: 'progress-audit', label: 'Progress Audit', icon: BarChart3 }
+                { id: 'overview', label: 'Business Highlights', icon: BookOpen },
+                { id: 'roadmap', label: 'Strategic Plan', icon: Map },
+                { id: 'weekly-tasks', label: 'Weekly Priorities', icon: Calendar }
               ].map((tab) => {
                 const Icon = tab.icon
                 return (
@@ -1362,7 +1391,7 @@ export default function YCPrototype() {
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                       activeTab === tab.id 
                         ? 'bg-teal-500/80 text-white shadow-lg backdrop-blur-sm' 
-                        : 'text-teal-200 hover:text-white hover:bg-white/10'
+                        : 'glass-text-teal hover:text-white hover:bg-white/10'
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -1372,12 +1401,49 @@ export default function YCPrototype() {
               })}
             </div>
           </div>
-          <div className="flex justify-end mt-3">
+          <div className="flex justify-between items-center mt-3">
+            {/* Forms Section */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm glass-text-teal font-medium">Forms:</span>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="glass-button text-xs px-3 py-1"
+              >
+                Create Account
+              </Button>
+              <span className="text-white/40">|</span>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="glass-button text-xs px-3 py-1"
+              >
+                Log-in
+              </Button>
+              <span className="text-white/40">|</span>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="glass-button text-xs px-3 py-1"
+              >
+                Business Setup
+              </Button>
+              <span className="text-white/40">|</span>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="glass-button text-xs px-3 py-1"
+              >
+                Growth Plan
+              </Button>
+            </div>
+            
+            {/* Log Out Button */}
             <Button 
-              variant="ghost" 
+              variant="outline" 
               size="sm" 
               onClick={() => window.location.href = '/'}
-              className="text-teal-200 hover:text-white hover:bg-white/10"
+              className="glass-button text-xs px-3 py-1"
             >
               <LogOut className="w-4 h-4 mr-2" />
               Log Out

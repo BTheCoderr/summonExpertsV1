@@ -133,6 +133,14 @@ input, textarea, select {
   min-height: 100vh !important;
 }
 
+.demo-page.light {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f8fafc 100%) !important;
+}
+
+.demo-page.dark {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%) !important;
+}
+
 .demo-page * {
   color: inherit;
 }
@@ -180,6 +188,12 @@ input, textarea, select {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
 }
 
+.demo-page.light .glass-panel {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+}
+
 /* Glassmorphism text colors */
 .glass-text-white {
   color: #ffffff !important;
@@ -191,6 +205,18 @@ input, textarea, select {
 
 .glass-text-teal-light {
   color: #99f6e4 !important;
+}
+
+.demo-page.light .glass-text-white {
+  color: #1e293b !important;
+}
+
+.demo-page.light .glass-text-teal {
+  color: #0f766e !important;
+}
+
+.demo-page.light .glass-text-teal-light {
+  color: #14b8a6 !important;
 }
 
 /* Glassmorphism buttons */
@@ -209,6 +235,18 @@ input, textarea, select {
   box-shadow: 0 8px 25px rgba(20, 184, 166, 0.3) !important;
 }
 
+.demo-page.light .glass-button {
+  background: rgba(15, 118, 110, 0.1) !important;
+  border: 1px solid rgba(15, 118, 110, 0.3) !important;
+  color: #0f766e !important;
+}
+
+.demo-page.light .glass-button:hover {
+  background: rgba(15, 118, 110, 0.2) !important;
+  border-color: rgba(15, 118, 110, 0.5) !important;
+  box-shadow: 0 8px 25px rgba(15, 118, 110, 0.2) !important;
+}
+
 /* Glassmorphism inputs */
 .glass-input {
   background: rgba(255, 255, 255, 0.1) !important;
@@ -224,6 +262,21 @@ input, textarea, select {
 .glass-input:focus {
   border-color: rgba(20, 184, 166, 0.6) !important;
   box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1) !important;
+}
+
+.demo-page.light .glass-input {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  color: #1e293b !important;
+}
+
+.demo-page.light .glass-input::placeholder {
+  color: rgba(30, 41, 59, 0.6) !important;
+}
+
+.demo-page.light .glass-input:focus {
+  border-color: rgba(15, 118, 110, 0.6) !important;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1) !important;
 }
 
 /* Animations */
