@@ -1,176 +1,94 @@
 # Summon Experts - AI-Powered Business Planning Platform
 
-A comprehensive AI-powered business planning platform that transforms business ideas into actionable strategies, roadmaps, and weekly task plans.
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+[![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://netlify.com/)
 
-🌐 **Website**: [summonexperts.com](https://summonexperts.com)
+A modern, AI-powered business planning platform that transforms business ideas into actionable strategies, roadmaps, and weekly task plans.
 
-## 🎯 What We Built
+## 🌐 Links
 
-**Summon Experts** is a complete business planning platform that helps entrepreneurs and business owners:
-- **Create comprehensive business strategies** with AI-powered insights
-- **Build detailed execution roadmaps** with milestones and metrics
-- **Generate personalized weekly task plans** for consistent progress
-- **Track progress and performance** with weekly audits and analytics
-- **Access a full-featured platform** with user accounts, business setup, and growth planning
-
-### **Platform Features**
-- ✅ **User Authentication** - Create accounts and manage profiles
-- ✅ **Business Setup Wizard** - 3-step business configuration process
-- ✅ **Growth Planning Tools** - Strategic goal setting and execution planning
-- ✅ **AI-Powered Insights** - GPT-4o and Claude integration for business intelligence
-- ✅ **Progress Tracking** - Weekly audits and performance monitoring
-- ✅ **Modern UI/UX** - Glassmorphism design with responsive layouts
+- **[Live Platform](https://summonexperts.com)** - Full business planning platform
+- **[Demo Mode](/demo)** - Try the platform features
+- **[Documentation](https://docs.summonexperts.com)** - Platform guides and tutorials
 
 ## 🚀 Features
 
-### **Strategic Planning**
-- AI-generated business strategies tailored to your specific goals
-- Market analysis and competitive positioning
-- Revenue projections and financial planning
-- Strategic hurdles identification and mitigation
-
-### **Roadmap Generation**
-- Detailed execution timelines with milestones
-- Key results and success metrics
-- Progress tracking and monitoring
-- Dependencies and resource allocation
-
-### **Weekly Task Management**
-- Personalized weekly task plans
-- Detailed subtasks with execution guidance
-- Interactive checkboxes for progress tracking
-- Priority-based task organization
-
-### **Progress Tracking**
-- Weekly audit system for reflection
-- Performance analytics and insights
-- Progress visualization and reporting
-- Continuous improvement tracking
-
-### **AI Integration**
-- Advanced AI processing with real-time metrics
-- Multiple AI models (GPT-4o, Claude)
-- Notion integration for seamless workflow
-- Intelligent task prioritization
+- **AI-Powered Planning** - GPT-4o and Claude integration for business intelligence
+- **Business Setup Wizard** - 3-step configuration process for new businesses
+- **Growth Planning Tools** - Strategic goal setting and execution planning
+- **Progress Tracking** - Weekly audits and performance monitoring
+- **User Management** - Complete authentication and profile system
+- **Modern UI/UX** - Glassmorphism design with responsive layouts
 
 ## 🛠️ Tech Stack
 
 - **Framework**: Next.js 14 with App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS with custom animations
+- **Language**: TypeScript 5.0
+- **Styling**: Tailwind CSS 3.0
 - **UI Components**: Radix UI + Custom components
 - **AI Integration**: OpenAI GPT-4o, Claude API
 - **Database**: Notion API integration
-- **Deployment**: Netlify/Vercel ready
+- **Deployment**: Netlify ready
 
-## 📦 Installation
+## 📦 Quick Start
 
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd summonExpertV1
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/BTheCoderr/summonExpertsV1.git
+cd summonExpertV1
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+# Install dependencies
+npm install
 
-3. **Set up environment variables**
-   ```bash
-   cp .env.example .env.local
-   ```
-   
-   Add your API keys:
-   ```env
-   # Notion API Integration
-   NOTION_SECRET=your-notion-secret-here
-   NOTION_DATABASE_ID=your-database-id-here
-   
-   # AI APIs (optional)
-   OPENAI_API_KEY=your-openai-key-here
-   CLAUDE_API_KEY=your-claude-key-here
-   ```
+# Set up environment variables
+cp .env.example .env.local
 
-4. **Run the development server**
-   ```bash
-   npm run dev
-   ```
+# Run development server
+npm run dev
+```
 
-5. **Open your browser**
-   Navigate to [http://localhost:3001](http://localhost:3001)
+## 🎯 Platform Structure
 
-## 🎯 Usage
+```
+/platform                    # Main platform dashboard
+├── /account               # User account creation
+├── /login                 # User authentication
+├── /business-setup        # Business configuration wizard
+├── /growth-plan           # Strategic planning tools
+└── /settings              # User preferences
+```
 
-### **Getting Started**
-1. **Visit the Platform**: Go to `/platform` for the full business planning experience
-2. **Create an Account**: Start with account creation at `/platform/account`
-3. **Set Up Your Business**: Use the business setup wizard at `/platform/business-setup`
-4. **Plan Your Growth**: Create strategic plans at `/platform/growth-plan`
-5. **Demo Mode**: Access via `/demo` to see the platform in action
+## 🔧 Environment Variables
 
-### **Platform Navigation**
-- **Dashboard** (`/platform`) - Main business overview and highlights
-- **Account Management** - User profiles and authentication
-- **Business Setup** - 3-step business configuration process
-- **Growth Planning** - Strategic goals and execution planning
-- **Settings** - User preferences and platform customization
+```env
+# Notion Integration
+NOTION_SECRET=your-notion-secret
+NOTION_DATABASE_ID=your-database-id
 
-### **Key Features**
-- **Full Platform**: Complete business planning solution with user accounts
-- **AI Generation**: Strategic plans, roadmaps, and weekly tasks
-- **Task Management**: Interactive progress tracking and weekly audits
-- **Modern Design**: Glassmorphism UI with responsive layouts
+# AI APIs (optional)
+OPENAI_API_KEY=your-openai-key
+CLAUDE_API_KEY=your-claude-key
+```
 
 ## 🚀 Deployment
 
-### **Netlify Deployment**
-1. Connect your GitHub repository to Netlify
-2. Set build command: `npm run build`
-3. Set publish directory: `out`
-4. Add environment variables in Netlify dashboard
+### Netlify
+1. Connect your GitHub repository
+2. Build command: `npm run build`
+3. Publish directory: `out`
+4. Add environment variables
 
-### **Vercel Deployment**
-1. Install Vercel CLI: `npm i -g vercel`
-2. Run: `vercel`
-3. Follow the prompts to deploy
-
-## 📁 Project Structure
-
-```
-summonExpertV1/
-├── app/                    # Next.js App Router pages
-│   ├── api/               # API routes (Claude, GPT, Notion, etc.)
-│   ├── platform/          # Main platform pages
-│   │   ├── account/       # User account creation
-│   │   ├── login/         # User authentication
-│   │   ├── business-setup/# Business configuration wizard
-│   │   ├── growth-plan/   # Strategic planning tools
-│   │   ├── settings/      # User preferences and settings
-│   │   └── page.tsx       # Main platform dashboard
-│   ├── demo/              # Demo page for testing
-│   ├── mvp/               # MVP task runner
-│   └── yc-prototype/      # YC prototype features
-├── components/            # React components
-│   ├── ui/               # Reusable UI components (Button, Card, etc.)
-│   ├── platform-navigation.tsx # Platform navigation system
-│   └── ...               # Feature components
-├── lib/                  # Utility functions and integrations
-├── public/               # Static assets
-└── styles/               # Global styles and themes
+### Vercel
+```bash
+npm i -g vercel
+vercel
 ```
 
-## 🔧 Configuration
+## 📄 License
 
-### **Notion Integration Setup**
-1. Create a Notion integration at [notion.so/my-integrations](https://notion.so/my-integrations)
-2. Share your pages with the integration
-3. Add the integration secret to your environment variables
-
-### **AI API Setup**
-1. Get API keys from OpenAI and/or Anthropic
-2. Add them to your environment variables
-3. The platform will use these for enhanced AI features
+MIT License - see [LICENSE](LICENSE) for details.
 
 ## 🤝 Contributing
 
@@ -180,14 +98,8 @@ summonExpertV1/
 4. Push to the branch: `git push origin feature-name`
 5. Submit a pull request
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
-For support, email support@summonexperts.com or create an issue in this repository.
-
 ---
 
-**Built with ❤️ by the Summon Experts team** 
+**Built with ❤️ by the Summon Experts team**
+
+[Website](https://summonexperts.com) • [Support](mailto:support@summonexperts.com) • [Issues](https://github.com/BTheCoderr/summonExpertsV1/issues) 
