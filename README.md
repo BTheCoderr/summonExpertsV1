@@ -2,6 +2,25 @@
 
 A comprehensive AI-powered business planning platform that transforms business ideas into actionable strategies, roadmaps, and weekly task plans.
 
+🌐 **Website**: [summonexperts.com](https://summonexperts.com)
+
+## 🎯 What We Built
+
+**Summon Experts** is a complete business planning platform that helps entrepreneurs and business owners:
+- **Create comprehensive business strategies** with AI-powered insights
+- **Build detailed execution roadmaps** with milestones and metrics
+- **Generate personalized weekly task plans** for consistent progress
+- **Track progress and performance** with weekly audits and analytics
+- **Access a full-featured platform** with user accounts, business setup, and growth planning
+
+### **Platform Features**
+- ✅ **User Authentication** - Create accounts and manage profiles
+- ✅ **Business Setup Wizard** - 3-step business configuration process
+- ✅ **Growth Planning Tools** - Strategic goal setting and execution planning
+- ✅ **AI-Powered Insights** - GPT-4o and Claude integration for business intelligence
+- ✅ **Progress Tracking** - Weekly audits and performance monitoring
+- ✅ **Modern UI/UX** - Glassmorphism design with responsive layouts
+
 ## 🚀 Features
 
 ### **Strategic Planning**
@@ -84,15 +103,24 @@ A comprehensive AI-powered business planning platform that transforms business i
 ## 🎯 Usage
 
 ### **Getting Started**
-1. Visit the homepage and click "Demo" to see the platform in action
-2. Explore the different tabs: Overview, Roadmap, Weekly Tasks, Progress Audit
-3. Try the AI generation features for strategic planning and task management
+1. **Visit the Platform**: Go to `/platform` for the full business planning experience
+2. **Create an Account**: Start with account creation at `/platform/account`
+3. **Set Up Your Business**: Use the business setup wizard at `/platform/business-setup`
+4. **Plan Your Growth**: Create strategic plans at `/platform/growth-plan`
+5. **Demo Mode**: Access via `/demo` to see the platform in action
+
+### **Platform Navigation**
+- **Dashboard** (`/platform`) - Main business overview and highlights
+- **Account Management** - User profiles and authentication
+- **Business Setup** - 3-step business configuration process
+- **Growth Planning** - Strategic goals and execution planning
+- **Settings** - User preferences and platform customization
 
 ### **Key Features**
-- **Demo Mode**: Access via `/demo` to see the full platform
-- **AI Generation**: Click "Generate Strategic Plan", "Generate Roadmap", or "Generate Tasks"
-- **Task Management**: Use interactive checkboxes to track progress
-- **Weekly Audits**: Submit weekly reflections and learnings
+- **Full Platform**: Complete business planning solution with user accounts
+- **AI Generation**: Strategic plans, roadmaps, and weekly tasks
+- **Task Management**: Interactive progress tracking and weekly audits
+- **Modern Design**: Glassmorphism UI with responsive layouts
 
 ## 🚀 Deployment
 
@@ -112,15 +140,24 @@ A comprehensive AI-powered business planning platform that transforms business i
 ```
 summonExpertV1/
 ├── app/                    # Next.js App Router pages
-│   ├── api/               # API routes
-│   ├── demo/              # Demo page
-│   └── yc-prototype/      # Main platform page
+│   ├── api/               # API routes (Claude, GPT, Notion, etc.)
+│   ├── platform/          # Main platform pages
+│   │   ├── account/       # User account creation
+│   │   ├── login/         # User authentication
+│   │   ├── business-setup/# Business configuration wizard
+│   │   ├── growth-plan/   # Strategic planning tools
+│   │   ├── settings/      # User preferences and settings
+│   │   └── page.tsx       # Main platform dashboard
+│   ├── demo/              # Demo page for testing
+│   ├── mvp/               # MVP task runner
+│   └── yc-prototype/      # YC prototype features
 ├── components/            # React components
-│   ├── ui/               # Reusable UI components
+│   ├── ui/               # Reusable UI components (Button, Card, etc.)
+│   ├── platform-navigation.tsx # Platform navigation system
 │   └── ...               # Feature components
-├── lib/                  # Utility functions
+├── lib/                  # Utility functions and integrations
 ├── public/               # Static assets
-└── styles/               # Global styles
+└── styles/               # Global styles and themes
 ```
 
 ## 🔧 Configuration
