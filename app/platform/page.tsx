@@ -148,7 +148,20 @@ export default function MainPlatform() {
               </div>
               Strategic Goals
             </h2>
-            <p className="glass-text-teal text-sm mb-4 underline">5-year plan, 12-month plan, Now</p>
+            <p className="glass-text-teal text-sm mb-4 underline">Vision, Mission, and Performance Targets</p>
+            
+            {/* Vision & Mission */}
+            <div className="space-y-3 mb-6">
+              <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
+                <span className="font-semibold glass-text-teal">Vision Statement:</span>
+                <span className="glass-text-white text-right max-w-md">To become the leading artisan bakery in Providence, serving 1000+ customers monthly with fresh, locally-sourced bread and pastries</span>
+              </div>
+              <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
+                <span className="font-semibold glass-text-teal">Mission Statement:</span>
+                <span className="glass-text-white text-right max-w-md">Delivering affordable, fresh baked goods daily while building a staple presence in the Providence community</span>
+              </div>
+            </div>
+
             <div className="space-y-3">
               <div className="flex justify-between items-start p-3 bg-white/5 rounded-xl">
                 <span className="font-semibold glass-text-teal">Vision:</span>
@@ -732,13 +745,22 @@ export default function MainPlatform() {
                 Business Setup
               </Button>
               <span className="text-white/40">|</span>
-              <Button 
+                            <Button 
                 variant="outline" 
-                size="sm"
+                size="sm" 
                 className="glass-button text-xs px-3 py-1"
                 onClick={() => router.push('/platform/growth-plan')}
               >
                 Growth Plan
+              </Button>
+              <span className="text-white/40">|</span>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="glass-button text-xs px-3 py-1"
+                onClick={() => router.push('/platform/growth-lever')}
+              >
+                Growth Lever
               </Button>
             </div>
           </div>
