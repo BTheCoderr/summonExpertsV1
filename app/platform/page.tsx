@@ -87,6 +87,15 @@ export default function MainPlatform() {
           </div>
         </div>
         <div className="flex items-center space-x-3">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="glass-button"
+            onClick={() => window.location.href = '/platform/growth-plan'}
+          >
+            <Target className="w-4 h-4 mr-2" />
+            New Growth Plan
+          </Button>
           <Button variant="outline" size="sm" className="glass-button">
             <Edit3 className="w-4 h-4 mr-2" />
             Edit Project
@@ -206,6 +215,34 @@ export default function MainPlatform() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Current Growth Plan Section */}
+      <div className="mt-8">
+        <Card className="glass-panel border-white/10">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center">
+              <Target className="w-5 h-5 mr-2 text-teal-400" />
+              Current Growth Plan
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-center py-8">
+              <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                <FileText className="w-8 h-8 text-gray-400" />
+              </div>
+              <h3 className="text-white font-medium mb-2">No Active Growth Plan</h3>
+              <p className="text-gray-400 mb-4">You haven't created a growth plan yet. Start building your 90-day strategy!</p>
+              <Button
+                onClick={() => window.location.href = '/platform/growth-plan'}
+                className="bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white"
+              >
+                <Target className="w-4 h-4 mr-2" />
+                Create Your First Growth Plan
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )
