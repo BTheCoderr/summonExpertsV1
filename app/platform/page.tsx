@@ -754,14 +754,32 @@ export default function MainPlatform() {
                 Growth Plan
               </Button>
               <span className="text-white/40">|</span>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="glass-button text-xs px-3 py-1"
-                onClick={() => router.push('/platform/growth-lever')}
-              >
-                Growth Lever
-              </Button>
+                              <Button
+                  variant="outline"
+                  size="sm"
+                  className="glass-button text-xs px-3 py-1"
+                  onClick={() => router.push('/platform/growth-lever')}
+                >
+                  Growth Lever
+                </Button>
+                <span className="text-white/40">|</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="glass-button text-xs px-3 py-1"
+                  onClick={() => router.push('/platform/tools')}
+                >
+                  Tools
+                </Button>
+                <span className="text-white/40">|</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="glass-button text-xs px-3 py-1"
+                  onClick={() => router.push('/platform/agents')}
+                >
+                  Agents
+                </Button>
             </div>
           </div>
         </div>

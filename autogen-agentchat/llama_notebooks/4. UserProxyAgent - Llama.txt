@@ -1,0 +1,89 @@
+# UserProxyAgent - Llama Version
+
+## UserProxyAgent with Llama
+
+This notebook demonstrates how to use AutoGen's UserProxyAgent with Llama for automated conversations.
+
+### Cell 1: Import and Setup
+```python
+from autogen_ext.models.ollama import OllamaChatCompletionClient
+from autogen_agentchat.agents import UserProxyAgent, AssistantAgent
+from autogen_agentchat.messages import TextMessage
+from autogen_core import CancellationToken
+
+# Initialize Llama client
+llama_client = OllamaChatCompletionClient(
+    model="llama3.2:3b"
+)
+
+print("✅ Llama client ready!")
+```
+
+### Cell 2: Create Agents
+```python
+# Create an assistant agent
+assistant = AssistantAgent(
+    name="LlamaAssistant",
+    system_message="You are a helpful AI assistant. Answer questions clearly and concisely.",
+    model_client=llama_client
+)
+
+# Create a user proxy agent
+user_proxy = UserProxyAgent(
+    name="UserProxy",
+    human_input_mode="NEVER",  # Don't ask for human input
+    max_consecutive_auto_reply=2
+)
+
+print("🤖 Both agents created successfully!")
+```
+
+### Cell 3: Test Basic Conversation
+```python
+# Start a conversation
+message = TextMessage(content="Hello! Can you help me with a math problem?", source="user")
+response = await user_proxy.initiate_chat(
+    assistant,
+    message=message,
+    cancellation_token=CancellationToken()
+)
+
+print("💬 Conversation started!")
+print("📝 Initial message:", message.content)
+```
+
+### Cell 4: Test Multi-Turn Conversation
+```python
+# Test a more complex conversation
+complex_message = TextMessage(
+    content="I need help with Python. Can you explain what a decorator is and give me an example?",
+    source="user"
+)
+
+complex_response = await user_proxy.initiate_chat(
+    assistant,
+    message=complex_message,
+    cancellation_token=CancellationToken()
+)
+
+print("🔄 Complex conversation completed!")
+```
+
+### Cell 5: Test Different Human Input Modes
+```python
+# Create a user proxy that can ask for human input
+interactive_proxy = UserProxyAgent(
+    name="InteractiveProxy",
+    human_input_mode="ALWAYS",  # Always ask for human input
+    max_consecutive_auto_reply=1
+)
+
+# Test interactive mode
+interactive_message = TextMessage(
+    content="Let's have a conversation about machine learning.",
+    source="user"
+)
+
+print("🤝 Interactive conversation mode ready!")
+print("Note: This will ask for your input during the conversation.")
+```

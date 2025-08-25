@@ -1,0 +1,97 @@
+# Streaming Messages - Llama Version
+
+## Streaming Messages with Llama
+
+This notebook demonstrates streaming message capabilities with your local Llama model.
+
+### Cell 1: Import and Setup
+```python
+from autogen_ext.models.ollama import OllamaChatCompletionClient
+from autogen_agentchat.agents import AssistantAgent
+from autogen_agentchat.messages import TextMessage
+from autogen_core import CancellationToken
+import asyncio
+
+print("✅ All modules imported successfully!")
+```
+
+### Cell 2: Initialize Llama Client
+```python
+# Initialize Llama client
+llama_client = OllamaChatCompletionClient(
+    model="llama3.2:3b"
+)
+
+print("🦙 Llama client ready!")
+```
+
+### Cell 3: Create Streaming Agent
+```python
+# Create an agent that can handle streaming
+streaming_agent = AssistantAgent(
+    name="StreamingAgent",
+    system_message="You are a helpful AI assistant. Provide detailed, step-by-step explanations.",
+    model_client=llama_client
+)
+
+print("🤖 Streaming agent created!")
+```
+
+### Cell 4: Test Basic Streaming
+```python
+# Test basic message streaming
+message = TextMessage(
+    content="Explain how machine learning works in simple terms.",
+    source="user"
+)
+
+print("📝 Sending message...")
+print("🔄 Response will stream in real-time...")
+
+response = await streaming_agent.on_messages([message], cancellation_token=CancellationToken())
+print("\n✅ Complete response received:")
+print(response.chat_message.content)
+```
+
+### Cell 5: Test Long-Form Content
+```python
+# Test with a request for longer content
+long_message = TextMessage(
+    content="Write a detailed explanation of neural networks, including layers, activation functions, and training process.",
+    source="user"
+)
+
+print("📝 Requesting detailed explanation...")
+print("🔄 This may take a moment with Llama...")
+
+long_response = await streaming_agent.on_messages([long_message], cancellation_token=CancellationToken())
+print("\n✅ Detailed response received:")
+print(long_response.chat_message.content)
+```
+
+### Cell 6: Test Code Generation
+```python
+# Test code generation with streaming
+code_message = TextMessage(
+    content="Write a complete Python class for a simple neural network with forward and backward propagation.",
+    source="user"
+)
+
+print("💻 Requesting code generation...")
+print("🔄 Generating neural network implementation...")
+
+code_response = await streaming_agent.on_messages([code_message], cancellation_token=CancellationToken())
+print("\n✅ Code generated:")
+print(code_response.chat_message.content)
+```
+
+### Cell 7: Performance Notes
+```python
+print("📊 Performance Notes:")
+print("• Llama 3.2:3b is a smaller model, so responses may be shorter")
+print("• Local processing means no network latency")
+print("• You can adjust the model size for different performance characteristics")
+print("• Try llama3.2:7b or llama3.2:13b for more detailed responses")
+
+print("\n🚀 Try different prompts to see how the agent responds!")
+```

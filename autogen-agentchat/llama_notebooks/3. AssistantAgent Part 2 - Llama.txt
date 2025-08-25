@@ -1,0 +1,84 @@
+# AssistantAgent Part 2 - Llama Version
+
+## Advanced AssistantAgent Features with Llama
+
+This notebook shows advanced features of AssistantAgent using your local Llama model.
+
+### Cell 1: Import and Setup
+```python
+from autogen_ext.models.ollama import OllamaChatCompletionClient
+from autogen_agentchat.agents import AssistantAgent
+from autogen_agentchat.messages import TextMessage
+from autogen_core import CancellationToken
+
+# Initialize Llama client
+llama_client = OllamaChatCompletionClient(
+    model="llama3.2:3b"
+)
+
+print("✅ Llama client ready!")
+```
+
+### Cell 2: Create Specialized Agents
+```python
+# Create a coding expert agent
+coding_expert = AssistantAgent(
+    name="CodingExpert",
+    system_message="You are an expert Python programmer. Provide clear, well-documented code examples.",
+    model_client=llama_client
+)
+
+# Create a math tutor agent
+math_tutor = AssistantAgent(
+    name="MathTutor",
+    system_message="You are a patient math tutor. Explain concepts step by step.",
+    model_client=llama_client
+)
+
+print("🤖 Specialized agents created!")
+```
+
+### Cell 3: Test Coding Expert
+```python
+# Test coding expertise
+code_question = TextMessage(
+    content="Write a Python function to calculate fibonacci numbers with memoization.",
+    source="user"
+)
+
+code_response = await coding_expert.on_messages([code_question], cancellation_token=CancellationToken())
+print("💻 Coding Expert Response:")
+print(code_response.chat_message.content)
+```
+
+### Cell 4: Test Math Tutor
+```python
+# Test math tutoring
+math_question = TextMessage(
+    content="Explain how to solve quadratic equations step by step.",
+    source="user"
+)
+
+math_response = await math_tutor.on_messages([math_question], cancellation_token=CancellationToken())
+print("🧮 Math Tutor Response:")
+print(math_response.chat_message.content)
+```
+
+### Cell 5: Agent Comparison
+```python
+# Compare how different agents handle the same question
+same_question = TextMessage(
+    content="What is recursion?",
+    source="user"
+)
+
+# Get responses from both agents
+coding_response = await coding_expert.on_messages([same_question], cancellation_token=CancellationToken())
+math_response = await math_tutor.on_messages([same_question], cancellation_token=CancellationToken())
+
+print("🤖 Coding Expert on Recursion:")
+print(coding_response.chat_message.content)
+print("\n" + "="*50 + "\n")
+print("🧮 Math Tutor on Recursion:")
+print(math_response.chat_message.content)
+```
