@@ -4,14 +4,17 @@ Extends the existing multi-agent system with strategic planning capabilities
 """
 
 from fastapi import FastAPI, Body, Query, HTTPException
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import AsyncGenerator, Dict, Optional
 from enum import Enum
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
 import json
 import uuid
 import asyncio
+import os
 
 from teams_llama import (
     planning_model, operations_model, quality_model,
@@ -32,6 +35,11 @@ app.add_middleware(
 
 # In-memory storage for plan sessions
 plan_sessions: Dict[str, dict] = {}
+
+# File-based persistence
+DATA_DIR = Path(os.getenv("PLAN_DATA_DIR", "data"))
+DATA_DIR.mkdir(parents=True, exist_ok=True)
+INDEX_PATH = DATA_DIR / "index.json"
 
 class Phase(str, Enum):
     collect = "collect"
@@ -570,6 +578,84 @@ def stream_data(data: dict) -> bytes:
 async def stream_error(message: str) -> AsyncGenerator[bytes, None]:
     """Stream error message"""
     yield stream_data({"type": "error", "message": message})
+
+# -------- Persistence helpers --------
+def _now_iso():
+    return datetime.now(timezone.utc).isoformat()
+
+def _date_iso(d: datetime):
+    return d.date().isoformat()
+
+def _aggregate_plan(sid: str) -> dict:
+    s = plan_sessions.get(sid, {})
+    # Default range: today -> +90 days (can be overridden by a real scheduler later)
+    start = _date_iso(datetime.now(timezone.utc))
+    end = _date_iso(datetime.now(timezone.utc) + timedelta(days=90))
+    title = f"Strategic Plan for {start} – {end}"
+    return {
+        "sid": sid,
+        "title": title,
+        "start": start,
+        "end": end,
+        "savedAt": _now_iso(),
+        "inputs": s.get("inputs"),
+        "okrs_draft": s.get("okrs_draft"),
+        "okrs": s.get("okrs"),
+        "market": s.get("market"),
+        "plan": s.get("plan"),
+        "plan_review": s.get("plan_review"),
+        "roadmap": s.get("roadmap"),
+    }
+
+def _read_index() -> list:
+    if INDEX_PATH.exists():
+        try:
+            return json.loads(INDEX_PATH.read_text())
+        except Exception:
+            return []
+    return []
+
+def _write_index(entries: list):
+    INDEX_PATH.write_text(json.dumps(entries, ensure_ascii=False, indent=2))
+
+@app.get("/plan/export")
+async def plan_export(sid: str):
+    """Export plan data as JSON"""
+    if sid not in plan_sessions:
+        return JSONResponse({"error": "invalid sid"}, status_code=400)
+    return JSONResponse(_aggregate_plan(sid))
+
+@app.post("/plan/save")
+async def plan_save(sid: str):
+    """Save plan to persistent storage"""
+    if sid not in plan_sessions:
+        return JSONResponse({"error": "invalid sid"}, status_code=400)
+    doc = _aggregate_plan(sid)
+    fname = f"{sid}.json"
+    (DATA_DIR / fname).write_text(json.dumps(doc, ensure_ascii=False, indent=2))
+    # update index (latest first)
+    idx = _read_index()
+    # remove any existing entry for sid
+    idx = [e for e in idx if e.get("sid") != sid]
+    idx.insert(0, {"sid": sid, "title": doc["title"], "savedAt": doc["savedAt"]})
+    _write_index(idx)
+    return JSONResponse({"ok": True, "sid": sid, "title": doc["title"]})
+
+@app.get("/plan/list")
+async def plan_list():
+    """List all saved plans"""
+    return JSONResponse({"plans": _read_index()})
+
+@app.get("/plan/get")
+async def plan_get(sid: str):
+    """Get a specific saved plan"""
+    fp = DATA_DIR / f"{sid}.json"
+    if not fp.exists():
+        return JSONResponse({"error": "not found"}, status_code=404)
+    try:
+        return JSONResponse(json.loads(fp.read_text()))
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500)
 
 # Health check
 @app.get("/health")

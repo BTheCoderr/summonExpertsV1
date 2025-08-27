@@ -810,6 +810,16 @@ export default function MainPlatform() {
                   <Target className="w-3 h-3 mr-1" />
                   5-Phase Plan
                 </Button>
+                <span className="text-white/40">|</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="glass-button text-xs px-3 py-1"
+                  onClick={() => router.push('/strategic-plan')}
+                >
+                  <FileText className="w-3 h-3 mr-1" />
+                  Plan Hub
+                </Button>
             </div>
           </div>
         </div>

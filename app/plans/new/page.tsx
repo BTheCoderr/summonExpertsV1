@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -64,6 +65,7 @@ interface AgentMessage {
 }
 
 export default function NewStrategicPlanPage() {
+  const router = useRouter()
   const [sessionId, setSessionId] = useState<string | null>(null)
   const [currentPhase, setCurrentPhase] = useState<Phase>("collect")
   const [isProcessing, setIsProcessing] = useState(false)
@@ -208,6 +210,34 @@ export default function NewStrategicPlanPage() {
       
     } catch (error) {
       console.error('Error confirming phase:', error)
+    }
+  }
+
+  const savePlan = async () => {
+    if (!sessionId) return
+    
+    try {
+      const response = await fetch(`/api/plan/save?sid=${sessionId}`, { 
+        method: "POST" 
+      })
+      
+      if (response.ok) {
+        // Redirect to the saved plan view
+        router.push(`/plans/${sessionId}`)
+      } else {
+        // Show error in the agent messages
+        const errorText = await response.text().catch(() => "Failed to save plan")
+        setAgentMessages(prev => [...prev, {
+          type: 'error',
+          message: `Save Error: ${errorText}`
+        }])
+      }
+    } catch (error) {
+      console.error('Error saving plan:', error)
+      setAgentMessages(prev => [...prev, {
+        type: 'error',
+        message: 'Failed to save plan - please try again'
+      }])
     }
   }
 
@@ -583,12 +613,23 @@ export default function NewStrategicPlanPage() {
                           <p>Your strategic plan is now complete with a detailed roadmap!</p>
                         </div>
                       </div>
-                      <Button 
-                        onClick={() => setCurrentPhase('complete')}
-                        className="bg-orange-600 hover:bg-orange-700"
-                      >
-                        Complete Plan
-                      </Button>
+                      <div className="flex space-x-2">
+                        <Button 
+                          onClick={savePlan}
+                          className="bg-green-600 hover:bg-green-700 text-white"
+                        >
+                          <CheckCircle2 className="w-4 h-4 mr-2" />
+                          Save Plan & View
+                        </Button>
+                        <Button 
+                          onClick={() => runPhase('roadmap')}
+                          variant="outline"
+                          className="border-gray-600 text-gray-300"
+                        >
+                          <Calendar className="w-4 h-4 mr-2" />
+                          Regenerate Roadmap
+                        </Button>
+                      </div>
                     </div>
                   )}
                 </CardContent>
