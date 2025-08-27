@@ -334,8 +334,7 @@ Remember: You're running on a local model, so provide clear, step-by-step execut
         
         participants = [strategy_expert, market_specialist, execution_strategist]
         termination_condition = TextMentionTermination(
-            "STRATEGIC_FRAMEWORK_COMPLETE|MARKET_ANALYSIS_COMPLETE|EXECUTION_PLAN_COMPLETE",
-            must_be_complete_sentence=True
+            "STRATEGIC_FRAMEWORK_COMPLETE|MARKET_ANALYSIS_COMPLETE|EXECUTION_PLAN_COMPLETE"
         )
         
     elif agent_type == "growth_planning":
@@ -377,8 +376,7 @@ Remember: You're running on a local model, so provide clear, actionable financia
         
         participants = [growth_strategist, financial_analyst]
         termination_condition = TextMentionTermination(
-            "GROWTH_STRATEGY_COMPLETE|FINANCIAL_ANALYSIS_COMPLETE",
-            must_be_complete_sentence=True
+            "GROWTH_STRATEGY_COMPLETE|FINANCIAL_ANALYSIS_COMPLETE"
         )
     
     else:
