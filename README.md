@@ -1,5 +1,11 @@
 # Summon Experts - AI-Powered Business Planning Platform
 
+<!-- repo-intro:start -->
+**Project snapshot:** Summon Experts V1 is the fuller AI business-planning application behind the brand, turning business ideas into structured plans, goals, roadmaps, and progress workflows.
+
+**What it demonstrates:** Next.js · TypeScript · AI integrations · authentication · planning/workflow UX.
+<!-- repo-intro:end -->
+
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
