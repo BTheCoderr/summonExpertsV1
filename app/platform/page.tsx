@@ -754,14 +754,72 @@ export default function MainPlatform() {
                 Growth Plan
               </Button>
               <span className="text-white/40">|</span>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="glass-button text-xs px-3 py-1"
-                onClick={() => router.push('/platform/growth-lever')}
-              >
-                Growth Lever
-              </Button>
+                              <Button
+                  variant="outline"
+                  size="sm"
+                  className="glass-button text-xs px-3 py-1"
+                  onClick={() => router.push('/platform/growth-lever')}
+                >
+                  Growth Lever
+                </Button>
+                <span className="text-white/40">|</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="glass-button text-xs px-3 py-1"
+                  onClick={() => router.push('/platform/tools')}
+                >
+                  Tools
+                </Button>
+                <span className="text-white/40">|</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="glass-button text-xs px-3 py-1"
+                  onClick={() => router.push('/platform/agents')}
+                >
+                  Agents
+                </Button>
+                <span className="text-white/40">|</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="glass-button text-xs px-3 py-1"
+                  onClick={() => router.push('/customer-support')}
+                >
+                  <Bot className="w-3 h-3 mr-1" />
+                  AI Support
+                </Button>
+                <span className="text-white/40">|</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="glass-button text-xs px-3 py-1"
+                  onClick={() => router.push('/strategic-planning')}
+                >
+                  <Brain className="w-3 h-3 mr-1" />
+                  Strategy AI
+                </Button>
+                <span className="text-white/40">|</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="glass-button text-xs px-3 py-1"
+                  onClick={() => router.push('/plans/new')}
+                >
+                  <Target className="w-3 h-3 mr-1" />
+                  5-Phase Plan
+                </Button>
+                <span className="text-white/40">|</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="glass-button text-xs px-3 py-1"
+                  onClick={() => router.push('/strategic-plan')}
+                >
+                  <FileText className="w-3 h-3 mr-1" />
+                  Plan Hub
+                </Button>
             </div>
           </div>
         </div>

@@ -1,0 +1,102 @@
+# Multi Model - Llama Version
+
+## Multi-Model Support with Llama
+
+This notebook demonstrates how to work with multiple models and agents using Llama.
+
+### Cell 1: Import and Setup
+```python
+from autogen_ext.models.ollama import OllamaChatCompletionClient
+from autogen_agentchat.agents import AssistantAgent
+from autogen_agentchat.messages import TextMessage
+from autogen_core import CancellationToken
+
+print("✅ All modules imported successfully!")
+```
+
+### Cell 2: Create Multiple Llama Clients
+```python
+# Create different Llama model clients
+# Note: You can use different Llama models if you have them installed
+llama_client_1 = OllamaChatCompletionClient(model="llama3.2:3b")
+llama_client_2 = OllamaChatCompletionClient(model="llama3.2:3b")  # Same model for demo
+
+print("🦙 Multiple Llama clients created!")
+print("💡 In practice, you could use different models like llama3.2:7b, llama3.2:13b, etc.")
+```
+
+### Cell 3: Create Specialized Agents
+```python
+# Create a coding expert agent
+coding_expert = AssistantAgent(
+    name="CodingExpert",
+    system_message="You are an expert Python programmer. Focus on clean, efficient code.",
+    model_client=llama_client_1
+)
+
+# Create a debugging expert agent
+debugging_expert = AssistantAgent(
+    name="DebuggingExpert",
+    system_message="You are an expert at debugging Python code. Help identify and fix issues.",
+    model_client=llama_client_2
+)
+
+print("🤖 Specialized agents created!")
+```
+
+### Cell 4: Test Different Agents
+```python
+# Test coding expert
+code_question = TextMessage(
+    content="Write a function to sort a list of dictionaries by a specific key.",
+    source="user"
+)
+
+code_response = await coding_expert.on_messages([code_question], cancellation_token=CancellationToken())
+print("💻 Coding Expert Response:")
+print(code_response.chat_message.content)
+```
+
+### Cell 5: Test Debugging Expert
+```python
+# Test debugging expert
+debug_question = TextMessage(
+    content="What's wrong with this code: for i in range(10): print(i)",
+    source="user"
+)
+
+debug_response = await debugging_expert.on_messages([debug_question], cancellation_token=CancellationToken())
+print("🐛 Debugging Expert Response:")
+print(debug_response.chat_message.content)
+```
+
+### Cell 6: Compare Agent Responses
+```python
+# Ask both agents the same question
+same_question = TextMessage(
+    content="What is the best way to handle errors in Python?",
+    source="user"
+)
+
+# Get responses from both agents
+coding_answer = await coding_expert.on_messages([same_question], cancellation_token=CancellationToken())
+debugging_answer = await debugging_expert.on_messages([same_question], cancellation_token=CancellationToken())
+
+print("🤖 Coding Expert on Error Handling:")
+print(coding_answer.chat_message.content)
+print("\n" + "="*50 + "\n")
+print("🐛 Debugging Expert on Error Handling:")
+print(debugging_answer.chat_message.content)
+```
+
+### Cell 7: Multi-Agent Collaboration
+```python
+# Simulate agents working together
+print("🤝 Multi-Agent Collaboration Demo:")
+print("1. Coding Expert creates code")
+print("2. Debugging Expert reviews it")
+print("3. Both agents can collaborate on improvements")
+
+# This demonstrates how you can chain agents together
+# In a real scenario, you'd have them communicate with each other
+```

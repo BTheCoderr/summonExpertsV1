@@ -1,0 +1,6 @@
+autogen-agentchat
+autogen-ext[ollama]
+fastapi
+uvicorn[standard]
+pydantic
+python-dotenv

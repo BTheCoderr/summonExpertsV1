@@ -10,7 +10,8 @@ import {
   LogOut, 
   Home,
   Settings,
-  Plus
+  Plus,
+  Bot
 } from 'lucide-react'
 
 export default function PlatformNavigation() {
@@ -42,6 +43,12 @@ export default function PlatformNavigation() {
       icon: Target,
       href: '/platform/growth-plan',
       description: 'Plan your growth strategy'
+    },
+    {
+      label: 'AI Strategy Team',
+      icon: Bot,
+      href: '/ai-strategy-team',
+      description: 'Collaborate with AI agents'
     }
   ]
 

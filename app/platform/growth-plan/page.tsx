@@ -22,6 +22,9 @@ import {
   CheckCircle2,
   X
 } from 'lucide-react'
+import { useMultiAgentStream } from '@/hooks/useMultiAgentStream'
+import { buildOKRPrompt, buildMarketPrompt, buildStrategyPrompt, buildRoadmapPrompt, type PlanInputs } from '@/lib/planPrompt'
+import AgentChat, { type ChatMessage } from '@/components/AgentChat'
 
 type Phase = 'input' | 'okr' | 'market' | 'strategy' | 'roadmap' | 'complete'
 
@@ -78,6 +81,94 @@ export default function StrategicPlanWorkflow() {
   })
   const [isProcessing, setIsProcessing] = useState(false)
   const [selectedOpportunities, setSelectedOpportunities] = useState<string[]>([])
+
+  // Agent integration
+  const { messages, sendMessage } = useMultiAgentStream()
+  const [agentMessages, setAgentMessages] = useState<{ [key in Phase]?: ChatMessage[] }>({})
+  const [isAgentWorking, setIsAgentWorking] = useState(false)
+
+  // Agent processing functions
+  const processWithAgents = async (phase: Phase, prompt: string) => {
+    setIsAgentWorking(true)
+    setAgentMessages(prev => ({ ...prev, [phase]: [] }))
+    
+    try {
+      await sendMessage(prompt)
+      
+      // Update agent messages for this phase
+      setAgentMessages(prev => ({ 
+        ...prev, 
+        [phase]: messages.filter(m => m.role === 'assistant' || m.role === 'system')
+      }))
+    } catch (error) {
+      console.error('Agent processing error:', error)
+    } finally {
+      setIsAgentWorking(false)
+    }
+  }
+
+  const handlePhase1Submit = async () => {
+    if (!planData.revenueGoal || !planData.customerGoal || !planData.availability) return
+    
+    setIsProcessing(true)
+    
+    // Build prompt for OKR generation
+    const prompt = buildOKRPrompt({
+      revenueGoal: planData.revenueGoal,
+      customerGoal: planData.customerGoal,
+      challenges: planData.challenges,
+      availability: planData.availability
+    })
+    
+    // Process with agents
+    await processWithAgents('okr', prompt)
+    
+    // Move to next phase
+    setCurrentPhase('okr')
+    setIsProcessing(false)
+  }
+
+  const handleMarketAnalysis = async () => {
+    const prompt = buildMarketPrompt({
+      revenueGoal: planData.revenueGoal,
+      customerGoal: planData.customerGoal,
+      challenges: planData.challenges,
+      availability: planData.availability
+    })
+    
+    await processWithAgents('market', prompt)
+    setCurrentPhase('market')
+  }
+
+  const handleStrategyDevelopment = async () => {
+    const okrData = agentMessages.okr?.map(m => m.content).join('\n') || ''
+    const marketData = agentMessages.market?.map(m => m.content).join('\n') || ''
+    
+    const prompt = buildStrategyPrompt({
+      revenueGoal: planData.revenueGoal,
+      customerGoal: planData.customerGoal,
+      challenges: planData.challenges,
+      availability: planData.availability
+    }, okrData, marketData)
+    
+    await processWithAgents('strategy', prompt)
+    setCurrentPhase('strategy')
+  }
+
+  const handleRoadmapCreation = async () => {
+    const okrData = agentMessages.okr?.map(m => m.content).join('\n') || ''
+    const strategyData = agentMessages.strategy?.map(m => m.content).join('\n') || ''
+    
+    const prompt = buildRoadmapPrompt({
+      revenueGoal: planData.revenueGoal,
+      customerGoal: planData.customerGoal,
+      challenges: planData.challenges,
+      availability: planData.availability
+    }, okrData, strategyData)
+    
+    await processWithAgents('roadmap', prompt)
+    setCurrentPhase('roadmap')
+  }
 
   // Phase 1: Input Collection
   const renderInputPhase = () => (
@@ -175,6 +266,13 @@ export default function StrategicPlanWorkflow() {
         <p className="text-gray-400">AI-generated objectives and key results based on your inputs</p>
       </div>
 
+      {/* Agent Chat for OKR Generation */}
+      <AgentChat 
+        messages={agentMessages.okr || []}
+        isLoading={isAgentWorking && currentPhase === 'okr'}
+        phase="okr"
+      />
+
       <Card className="glass-panel border-white/10">
         <CardHeader>
           <CardTitle className="text-white flex items-center">
@@ -218,10 +316,11 @@ export default function StrategicPlanWorkflow() {
           Regenerate OKRs
         </Button>
         <Button
-          onClick={() => setCurrentPhase('market')}
+          onClick={handleMarketAnalysis}
           className="bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white"
         >
-          Looks Good, Continue
+          <Brain className="w-4 h-4 mr-2" />
+          Generate Market Analysis
           <ArrowRight className="w-4 h-4 ml-2" />
         </Button>
       </div>
@@ -235,6 +334,13 @@ export default function StrategicPlanWorkflow() {
         <h2 className="text-2xl font-bold text-white mb-2">Phase 3: Market Analysis</h2>
         <p className="text-gray-400">AI-researched growth opportunities for your business and location</p>
       </div>
+
+      {/* Agent Chat for Market Analysis */}
+      <AgentChat 
+        messages={agentMessages.market || []}
+        isLoading={isAgentWorking && currentPhase === 'market'}
+        phase="market"
+      />
 
       <Card className="glass-panel border-white/10">
         <CardHeader>
@@ -281,11 +387,12 @@ export default function StrategicPlanWorkflow() {
           Back to OKRs
         </Button>
         <Button
-          onClick={() => setCurrentPhase('strategy')}
+          onClick={handleStrategyDevelopment}
           disabled={selectedOpportunities.length === 0}
           className="bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white"
         >
-          Continue to Strategy
+          <Brain className="w-4 h-4 mr-2" />
+          Generate Strategy
           <ArrowRight className="w-4 h-4 ml-2" />
         </Button>
       </div>
@@ -299,6 +406,13 @@ export default function StrategicPlanWorkflow() {
         <h2 className="text-2xl font-bold text-white mb-2">Phase 4: Execution Strategy</h2>
         <p className="text-gray-400">Your prioritized plan of action to achieve your 90-day goals</p>
       </div>
+
+      {/* Agent Chat for Strategy Development */}
+      <AgentChat 
+        messages={agentMessages.strategy || []}
+        isLoading={isAgentWorking && currentPhase === 'strategy'}
+        phase="strategy"
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card className="glass-panel border-white/10">
@@ -365,10 +479,11 @@ export default function StrategicPlanWorkflow() {
           Back to Market Analysis
         </Button>
         <Button
-          onClick={() => setCurrentPhase('roadmap')}
+          onClick={handleRoadmapCreation}
           className="bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white"
         >
-          Approve & Generate Roadmap
+          <Brain className="w-4 h-4 mr-2" />
+          Generate Roadmap
           <ArrowRight className="w-4 h-4 ml-2" />
         </Button>
       </div>
@@ -382,6 +497,13 @@ export default function StrategicPlanWorkflow() {
         <h2 className="text-2xl font-bold text-white mb-2">Phase 5: Project Roadmap</h2>
         <p className="text-gray-400">Your executable roadmap with timelines and dependencies</p>
       </div>
+
+      {/* Agent Chat for Roadmap Creation */}
+      <AgentChat 
+        messages={agentMessages.roadmap || []}
+        isLoading={isAgentWorking && currentPhase === 'roadmap'}
+        phase="roadmap"
+      />
 
       <Card className="glass-panel border-white/10">
         <CardHeader>
@@ -465,29 +587,8 @@ export default function StrategicPlanWorkflow() {
     </div>
   )
 
-  // Event Handlers
-  const handlePhase1Submit = async () => {
-    setIsProcessing(true)
-    
-    // Simulate AI processing
-    await new Promise(resolve => setTimeout(resolve, 3000))
-    
-    // Generate sample OKRs
-    setPlanData({
-      ...planData,
-      objective: `Increase revenue by ${Math.round(parseInt(planData.revenueGoal.replace(/[^0-9]/g, '')) * 0.4)}% and acquire ${planData.customerGoal} within 90 days through strategic marketing and operational improvements`,
-      keyResults: [
-        `Achieve $${planData.revenueGoal} in revenue by end of 90 days`,
-        `Acquire ${planData.customerGoal} new customers`,
-        `Improve customer acquisition cost by 25%`,
-        `Launch 2 new marketing channels`,
-        `Optimize conversion rate to 15%`
-      ]
-    })
-    
-    setIsProcessing(false)
-    setCurrentPhase('okr')
-  }
+  // Event Handlers - Agent Integration
+  // Note: handlePhase1Submit is now defined above with agent integration
 
   const handleOKRRegenerate = async () => {
     setIsProcessing(true)
